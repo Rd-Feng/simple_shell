@@ -19,32 +19,34 @@ int main(int argc, char **argv, char **env)
 	char buffer[BUFFER_SIZE] = {0};
 	char *bufPtr = buffer;
 	char *arg = NULL;
-	int i, cond;
+	int i, j, cond;
 
 	argc += 1;
 	env += 1;
 	while (1)
 	{
-		printf("($) ");
+		write(1, "($) ", 4);
 		cond = getline(&bufPtr, &buf_size, stdin);
 		if (cond == EOF)
 			return (0);
 		if (EOF == fflush(stdin))
 		{
-			printf("Error: unable to flush stdin\n");
+			write(1, "Error: unable to flush stdin\n", 29);
 			exit(98);
 		}
 		pid = fork();
 		if (pid < 0)
 		{
-			printf("Error: unable to create child process\n");
+			write(1, "Error: unable to create child process\n", 38);
 			exit(98);
 		}
 		else if (pid == 0)/* in child process */
 		{
 			arg = strtok(buffer, " \n");
 			execve(arg, argv, NULL);
-			printf("%s: No such file or directory\n", argv[0]);
+			for (j = 0; &argv[0][j]; j++)
+				write(1, &argv[0][j], 10);
+			write(1,  ": No such file or directory\n", 28);
 		}
 		else
 		{
