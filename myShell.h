@@ -6,4 +6,6 @@ char **process_string(char *);
 char *_strdup(char *);
 
 int _strcmp(char *, char *);
+
+char *_strtok(char *, char *);
 #endif

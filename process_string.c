@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <string.h>
 #include "myShell.h"
 /**
  * process_string - process a line of command into string tokens
@@ -16,18 +15,18 @@ char **process_string(char *bufPtr)
 
 	if (!tempBuffer)
 		return (NULL);
-	token = strtok(tempBuffer, " \n");
+	token = _strtok(tempBuffer, " \n");
 	tokCount++;
 	while (token)
 	{
-		token = strtok(NULL, " \n");
+		token = _strtok(NULL, " \n");
 		tokCount++;
 	}
 	tokCount++; /* null terminator string */
 	args = malloc(sizeof(*args) * tokCount);
-	args[i++] = strtok(bufPtr, " \n");
+	args[i++] = _strtok(bufPtr, " \n");
 	while (i < tokCount - 1)
-		args[i++] = strtok(NULL, " \n");
+		args[i++] = _strtok(NULL, " \n");
 	args[i] = NULL;
 	free(tempBuffer);
 	return (args);

@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <string.h>
 #include "myShell.h"
-#include "holberton.h"
+#include "holberton.h" /* for _printf */
 #define BUFFER_SIZE 1024
 /**
  * main - entry point for simple shell
@@ -33,10 +32,11 @@ int main(int argc, char **argv, char **env)
 			return (0);
 		if (fflush(stdin) == EOF)
 		{
+			_printf("Error: fail to flush stdin\n");
 			exit(98);
 		}
 		args = process_string(bufPtr);
-		if (strcmp(args[0], "exit") == 0)
+		if (_strcmp(args[0], "exit") == 0)
 		{
 			free(args);
 			return (0);
