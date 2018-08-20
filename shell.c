@@ -22,7 +22,7 @@ int main(int argc, char **argv, char **env)
 	char *bufPtr = buffer;
 	char **args = NULL;
 	char *pth;
-	char *pthArr;
+	char *execStr;
 
 	int i, cond;
 
@@ -50,14 +50,13 @@ int main(int argc, char **argv, char **env)
 		{
 			execve(args[0], args, NULL);
 			pth = getenv("PATH");
-			pthArr = strtok(pth, ":");
-			while (pthArr)
+			execStr = strtok(pth, ":");
+			while (execStr)
 			{
-				pthArr = str_concat(pthArr, "/");
-				pthArr = str_concat(pthArr, args[0]);
-				_printf("%s\n", pthArr);
-				execve(pthArr, args, NULL);
-				pthArr = strtok(NULL, ":");
+				execStr = str_concat(pthArr, "/");
+				execStr = str_concat(pthArr, args[0]);
+				execve(execStr, args, NULL);
+				execStr = strtok(NULL, ":");
 			}
 			_printf("%s: No such file or directory\n", argv[0]);
 		}
