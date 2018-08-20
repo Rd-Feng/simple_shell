@@ -36,7 +36,11 @@ int main(int argc, char **argv, char **env)
 			exit(98);
 		}
 		args = process_string(bufPtr);
-		/* TODO - implement exit to check memory leak */
+		if (strcmp(args[0], "exit") == 0)
+		{
+			free(args);
+			return (0);
+		}
 		pid = fork();
 		if (pid < 0)
 		{
