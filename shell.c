@@ -31,7 +31,7 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		_printf("($) ");
-		cond = getline(&bufPtr, &buf_size, stdin);
+		cond = _getline(&bufPtr, &buf_size);
 		if (cond == EOF)
 			return (0);
 		if (fflush(stdin) == EOF)
@@ -48,7 +48,6 @@ int main(int argc, char **argv, char **env)
 		}
 		else if (pid == 0)/* in child process */
 		{
-			execve(args[0], args, NULL);
 			pth = getenv("PATH");
 			execStr = strtok(pth, ":");
 			while (execStr)

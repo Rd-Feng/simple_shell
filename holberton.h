@@ -69,4 +69,7 @@ int _strlen(char *);
 
 int _printf(const char *, ...);
 
+char *_strchr(char *s, char c);
+
+
 #endif
