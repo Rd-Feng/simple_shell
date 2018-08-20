@@ -53,9 +53,10 @@ int main(int argc, char **argv, char **env)
 			execStr = strtok(pth, ":");
 			while (execStr)
 			{
-				execStr = str_concat(pthArr, "/");
-				execStr = str_concat(pthArr, args[0]);
+				execStr = str_concat(execStr, "/");
+				execStr = str_concat(execStr, args[0]);
 				execve(execStr, args, NULL);
+				free(execStr);
 				execStr = strtok(NULL, ":");
 			}
 			_printf("%s: No such file or directory\n", argv[0]);
