@@ -4,6 +4,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include "myShell.h"
+#include "holberton.h"
 #define BUFFER_SIZE 1024
 /**
  * main - entry point for simple shell
@@ -26,7 +27,7 @@ int main(int argc, char **argv, char **env)
 	env += 1;
 	while (1)
 	{
-		write(1, "($) ", 4);
+		_printf("($) ");
 		cond = getline(&bufPtr, &buf_size, stdin);
 		if (cond == EOF)
 			return (0);
@@ -44,7 +45,7 @@ int main(int argc, char **argv, char **env)
 		else if (pid == 0)/* in child process */
 		{
 			execve(args[0], args, NULL);
-			printf("%s: No such file or directory\n", argv[0]);
+			_printf("%s: No such file or directory\n", argv[0]);
 		}
 		else
 		{
