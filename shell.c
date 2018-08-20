@@ -21,6 +21,9 @@ int main(int argc, char **argv, char **env)
 	char buffer[BUFFER_SIZE] = {0};
 	char *bufPtr = buffer;
 	char **args = NULL;
+	char *pth;
+	char *pthArr;
+
 	int i, cond;
 
 	argc += 1;
@@ -46,6 +49,16 @@ int main(int argc, char **argv, char **env)
 		else if (pid == 0)/* in child process */
 		{
 			execve(args[0], args, NULL);
+			pth = getenv("PATH");
+			pthArr = strtok(pth, ":");
+			while (pthArr)
+			{
+				pthArr = str_concat(pthArr, "/");
+				pthArr = str_concat(pthArr, args[0]);
+				_printf("%s\n", pthArr);
+				execve(pthArr, args, NULL);
+				pthArr = strtok(NULL, ":");
+			}
 			_printf("%s: No such file or directory\n", argv[0]);
 		}
 		else
