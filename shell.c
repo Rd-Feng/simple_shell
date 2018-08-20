@@ -21,6 +21,9 @@ int main(int argc, char **argv, char **env)
 	char buffer[BUFFER_SIZE] = {0};
 	char *bufPtr = buffer;
 	char **args = NULL;
+	char *pth;
+	char *execStr;
+
 	int i, cond;
 
 	argc += 1;
@@ -33,6 +36,7 @@ int main(int argc, char **argv, char **env)
 			return (0);
 		if (fflush(stdin) == EOF)
 		{
+			write(1, "Error: unable to flush stdin\n", 29);
 			exit(98);
 		}
 		args = process_string(bufPtr);
@@ -49,6 +53,16 @@ int main(int argc, char **argv, char **env)
 		else if (pid == 0)/* in child process */
 		{
 			execve(args[0], args, NULL);
+			pth = getenv("PATH");
+			execStr = strtok(pth, ":");
+			while (execStr)
+			{
+				execStr = str_concat(execStr, "/");
+				execStr = str_concat(execStr, args[0]);
+				execve(execStr, args, NULL);
+				free(execStr);
+				execStr = strtok(NULL, ":");
+			}
 			_printf("%s: No such file or directory\n", argv[0]);
 		}
 		else
