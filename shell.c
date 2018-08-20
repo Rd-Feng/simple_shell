@@ -44,8 +44,8 @@ int main(int argc, char **argv, char **env)
 		{
 			arg = strtok(buffer, " \n");
 			execve(arg, argv, NULL);
-			for (j = 0; &argv[0][j]; j++)
-				write(1, &argv[0][j], 10);
+			for (j = 0; &argv[0][j] != '\0'; j++)
+				write(1, &argv[0][j], 1);
 			write(1,  ": No such file or directory\n", 28);
 		}
 		else
