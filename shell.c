@@ -20,8 +20,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	char buffer[BUFFER_SIZE] = {0};
 	char *bufPtr = buffer;
 	char **args = malloc(sizeof(*args) * count);
-	int cond, status = 0, tokCount = 0;
-	static int errCount = 0;
+	int cond, status = 0, tokCount = 0, commandCount = 0;
 
 	if (!args)
 		exit(-1);
@@ -30,6 +29,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		for (i = 0; i < count; i++)
 			args[i] = NULL;
 		_printf("($) ");
+		commandCount++;
 		cond = getline(&bufPtr, &buf_size, stdin);
 
 		if (*bufPtr == '\n')
@@ -66,15 +66,13 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		{
 			run_command(args, env);
 			_printf("%s: %d: No such file or directory\n",
-				argv[0], errCount + 1);
+				argv[0], commandCount);
 			free(args);
 			return (-1);
 		}
 		else
 		{
 			wait(&status);
-			if (status != 0)
-				errCount++;
 			for (i = 0; i < BUFFER_SIZE; i++)
 				buffer[i] = 0;
 			status = 0;
