@@ -31,6 +31,13 @@ char *_getenv(char *name, char **env)
 	return (NULL);
 }
 
+/**
+ * run_command - searches path dirs for command and execs
+ * @args: args to feed to execve
+ * @env: environment variables
+ * Return: variable value on success, NULL otherwise
+ */
+
 void run_command(char **args, char **env)
 {
 	char *path = _getenv("PATH", env);

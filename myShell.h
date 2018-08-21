@@ -1,9 +1,14 @@
 #ifndef MY_SHELL_H
 #define MY_SHELL_H
+#include <stdio.h>
 
 int process_string(char *, char ***, size_t *);
 
 char *_strdup(char *);
+
+char *_strcpy(char *dest, const char *src);
+
+int _getline(char **lineptr, size_t *n);
 
 int _strcmp(char *, char *);
 

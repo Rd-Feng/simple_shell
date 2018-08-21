@@ -25,7 +25,7 @@ int process_string(char *bufPtr, char ***args, size_t *count)
 		{
 			(*count) += 10;
 			*args = _realloc(*args, (*count) - 10, *count);
-			if(!(*args))
+			if (!(*args))
 			{
 				write(1, "realloc error\n", 14);
 				exit(-1);

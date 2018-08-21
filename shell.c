@@ -31,7 +31,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			args[i] = NULL;
 		_printf("($) ");
 		commandCount++;
-		cond = getline(&bufPtr, &buf_size, stdin);
+		cond = _getline(&bufPtr, &buf_size);
 		if (*bufPtr == '\n')
 			continue;
 		if (cond == -1)
