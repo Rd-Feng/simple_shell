@@ -39,7 +39,7 @@ void run_command(char **args, char **env)
 	char *tmp = NULL;
 
 	if (!path)
-		return;
+		exit(-1);
 	execve(args[0], args, NULL);/* see if a valid path is given */
 	exePath = _strtok(path, ":");
 	while (exePath)

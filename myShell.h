@@ -1,7 +1,7 @@
 #ifndef MY_SHELL_H
 #define MY_SHELL_H
 
-void process_string(char *, char ***, size_t *);
+int process_string(char *, char ***, size_t *);
 
 char *_strdup(char *);
 
