@@ -21,6 +21,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	char *bufPtr = buffer;
 	char **args = malloc(sizeof(*args) * count);
 	int cond, status = 0, tokCount = 0, commandCount = 0;
+	int isEOF = 0;
 
 	if (!args)
 		exit(-1);
@@ -31,11 +32,16 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		_printf("($) ");
 		commandCount++;
 		cond = getline(&bufPtr, &buf_size, stdin);
-
 		if (*bufPtr == '\n')
 			continue;
-		if (cond == -1 || cond == 0)
+		if (cond == -1)
+		{
 			return (0);
+		}
+		if (cond == 0)
+			return (0);
+		if (buffer[cond - 1] != '\n')
+			isEOF = 1;
 		if (fflush(stdin) == EOF)
 		{
 			write(1, "Error: unable to flush stdin\n", 29);
@@ -49,8 +55,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		}
 		if (!_strcmp(args[0], "env") && tokCount == 1)
 		{
-			for (i = 0; env[i]; i++)
-				_printf("%s\n", env[i]);
+			print_env(env);
 			for (i = 0; i < BUFFER_SIZE; i++)
 				buffer[i] = 0;
 			status = 0;
@@ -73,6 +78,11 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		else
 		{
 			wait(&status);
+			if (isEOF)
+			{
+				_printf("($) \n");
+				return (0);
+			}
 			for (i = 0; i < BUFFER_SIZE; i++)
 				buffer[i] = 0;
 			status = 0;
