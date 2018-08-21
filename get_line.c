@@ -4,7 +4,7 @@
 #define BUFFER_SIZE 1024
 
 /**
- * _get_line - fetches a line of chars from stdin
+ * _getline - fetches a line of chars from stdin
  * @lineptr: ptr to a buffer to store the line
  * @n: size of the buffer
  *
@@ -15,6 +15,7 @@ int _getline(char **lineptr, size_t *n)
 {
 	static char line[BUFFER_SIZE];
 	char *ptr;
+	unsigned int len;
 
 	if (lineptr == NULL || n == NULL)
 	{
@@ -27,6 +28,7 @@ int _getline(char **lineptr, size_t *n)
 	if (ptr)
 		*ptr = '\0';
 
+	len = _strlen(line);
 	_strcpy(*lineptr, line);
 	return (len);
 }
