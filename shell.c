@@ -13,32 +13,36 @@
  *
  * Return: 0 on success
  */
-int main(int argc, char **argv, char **env)
+int main(int __attribute__((unused)) argc, char **argv, char **env)
 {
 	pid_t pid;
-	size_t buf_size = BUFFER_SIZE;
+	size_t i, buf_size = BUFFER_SIZE, count = 10;
 	char buffer[BUFFER_SIZE] = {0};
 	char *bufPtr = buffer;
-	char **args = NULL;
-	char *pth;
-	char *execStr;
+	char **args = malloc(sizeof(*args) * count);
+	int cond;
 
-	int i, cond;
-
-	argc += 1;
-	env += 1;
+	if (!args)
+		exit(-1);
 	while (1)
 	{
+		for (i = 0; i < count; i++)
+			args[i] = NULL;
 		_printf("($) ");
 		cond = getline(&bufPtr, &buf_size, stdin);
-		if (cond == EOF)
+
+		if (*bufPtr == '\n')
+			continue;
+		if (cond == -1 || cond == 0)
+		{
 			return (0);
+		}
 		if (fflush(stdin) == EOF)
 		{
 			write(1, "Error: unable to flush stdin\n", 29);
 			exit(98);
 		}
-		args = process_string(bufPtr);
+		process_string(bufPtr, &args, &count);
 		if (_strcmp(args[0], "exit") == 0)
 		{
 			free(args);
@@ -51,25 +55,16 @@ int main(int argc, char **argv, char **env)
 		}
 		else if (pid == 0)/* in child process */
 		{
-			execve(args[0], args, NULL);
-			pth = getenv("PATH");
-			execStr = _strtok(pth, ":");
-			while (execStr)
-			{
-				execStr = str_concat(execStr, "/");
-				execStr = str_concat(execStr, args[0]);
-				execve(execStr, args, NULL);
-				free(execStr);
-				execStr = _strtok(NULL, ":");
-			}
-			_printf("%s: No such file or directory\n", argv[0]);
+			run_command(args, env);
+			_printf("%s: 1: No such file or directory\n", argv[0]);
+			free(args);
+			exit(1);
 		}
 		else
 		{
 			wait(NULL);
 			for (i = 0; i < BUFFER_SIZE; i++)
 				buffer[i] = 0;
-			free(args);
 		}
 	}
 }
