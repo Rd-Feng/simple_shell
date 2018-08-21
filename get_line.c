@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include "myShell.h"
 #include "holberton.h"
+#define BUFFER_SIZE 1024
 
 /**
  * _get_line - fetches a line of chars from stdin
@@ -12,7 +13,7 @@
 
 int _getline(char **lineptr, size_t *n)
 {
-	static char line[1024];
+	static char line[BUFFER_SIZE];
 	char *ptr;
 	unsigned int len;
 
@@ -21,7 +22,7 @@ int _getline(char **lineptr, size_t *n)
 		return (-1);
 	}
 
-	len = read(0, line, 1024);
+	len = read(0, line, BUFFER_SIZE);
 	/* iterate through line looking for \n */
 	ptr = _strchr(line, '\n');
 	if (ptr)
