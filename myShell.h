@@ -2,7 +2,7 @@
 #define MY_SHELL_H
 #include <stdio.h>
 
-void process_string(char *, char ***, size_t *);
+int process_string(char *, char ***, size_t *);
 
 char *_strdup(char *);
 

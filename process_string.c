@@ -8,8 +8,9 @@
  * @bufPtr: line of command
  * @args: address of arg array
  * @count: number of tokens args can hold
+ * Return: number of token found
  */
-void process_string(char *bufPtr, char ***args, size_t *count)
+int process_string(char *bufPtr, char ***args, size_t *count)
 {
 	char *token = NULL;
 	unsigned int tokCount = 0;
@@ -31,4 +32,5 @@ void process_string(char *bufPtr, char ***args, size_t *count)
 			}
 		}
 	}
+	return (tokCount - 1);
 }
