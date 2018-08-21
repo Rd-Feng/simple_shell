@@ -113,3 +113,53 @@ int _strlen(char *s)
 		;
 	return (length);
 }
+
+/**
+ * _strdup - copy a string to a new allocated block of memory
+ * @str: string
+ *
+ * Return: pointer to duplicated string, NULL if insufficient memory
+ */
+char *_strdup(char *str)
+{
+	int len = 0; /* index of terminating null byte */
+	char *ptr = NULL;
+
+	if (!str)
+		return (NULL);
+	while (*str)
+	{
+		len++;
+		str++;
+	}
+	ptr = (char *) malloc(sizeof(char) * (len + 1));
+	if (ptr)
+	{
+		while (len >= 0)
+			*(ptr + len--) = *(str--);
+	}
+	return (ptr);
+}
+
+/**
+ * _strchr - locates a character in a string
+ * @s: where to start looking
+ * @c: values to find
+ *
+ * Return: pointer to begining of mem area
+ */
+char *_strchr(char *s, char c)
+{
+	int i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == c)
+			return (&s[i]);
+		i++;
+	}
+	if (c == '\0')
+		return (&s[i]);
+	return (0);
+}

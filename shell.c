@@ -29,7 +29,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		for (i = 0; i < count; i++)
 			args[i] = NULL;
 		_printf("($) ");
-		cond = getline(&bufPtr, &buf_size, stdin);
+		cond = _getline(&bufPtr, &buf_size);
 
 		if (*bufPtr == '\n')
 			continue;

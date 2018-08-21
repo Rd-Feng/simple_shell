@@ -1,11 +1,14 @@
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
 #include <unistd.h>
 #include "myShell.h"
 #include "holberton.h"
-#include <string.h>
+
+/**
+ * _get_line - fetches a line of chars from stdin
+ * @lineptr: ptr to a buffer to store the line
+ * @n: size of the buffer
+ *
+ * Return: pointer to begining of mem area
+ */
 
 int _getline(char **lineptr, size_t *n)
 {
@@ -15,27 +18,17 @@ int _getline(char **lineptr, size_t *n)
 
 	if (lineptr == NULL || n == NULL)
 	{
-		//errno = EINVAL;
-		return -1;
+		return (-1);
 	}
 
-	read(0, line, 1024);
+	len = read(0, line, 1024);
 	/* iterate through line looking for \n */
-	ptr = _strchr(line,'\n');
+	ptr = _strchr(line, '\n');
 	if (ptr)
 		*ptr = '\0';
 
 	len = _strlen(line);
-   
-   if ((len+1) < 1024)
-   {
-      //ptr = realloc(*lineptr, 256);
-      //if (ptr == NULL)
-         //return(-1);
-      *lineptr = ptr;
-      *n = 1024;
-   }
 
-   strcpy(*lineptr, line); 
-   return(len);
+	_strcpy(*lineptr, line);
+	return (len);
 }
