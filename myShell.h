@@ -19,4 +19,7 @@ void run_command(char **args, char **env);
 void *_realloc(char **ptr, unsigned int old_size, unsigned int new_size);
 
 void print_env(char **);
+
+int _atoi(char *s);
+
 #endif
