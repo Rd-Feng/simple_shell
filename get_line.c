@@ -14,17 +14,16 @@
 int _getline(char **lineptr, size_t *n)
 {
 	static char line[BUFFER_SIZE];
-	unsigned int len;
+	unsigned int len, i;
 
 	if (lineptr == NULL || n == NULL)
 	{
 		return (-1);
 	}
 
-	read(0, line, BUFFER_SIZE);
-	/* iterate through line looking for \n */
-
-	len = _strlen(line);
+	len = read(0, line, BUFFER_SIZE);
 	_strcpy(*lineptr, line);
+	for (i = 0; i < BUFFER_SIZE; i++)
+		line[i] = 0;
 	return (len);
 }
