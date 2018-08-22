@@ -22,4 +22,7 @@ void print_env(char **);
 
 int _atoi(char *s);
 
+int _setenv(char *name, char *value, int overwrite);
+
+
 #endif

@@ -21,7 +21,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	char *bufPtr = buffer;
 	char **args = malloc(sizeof(*args) * count);
 	int cond, status = 0, tokCount = 0, commandCount = 0;
-	int isEOF = 0;
+	int exitCode, isEOF = 0;
 
 	if (!args)
 		exit(-1);
@@ -50,8 +50,12 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		tokCount = process_string(bufPtr, &args, &count);
 		if (!_strcmp(args[0], "exit"))
 		{
+			if (args[1])
+				exitCode = _atoi(args[1]);
+			else
+				exitCode = 0;
 			free(args);
-			return (0);
+			return (exitCode);
 		}
 		if (!_strcmp(args[0], "env") && tokCount == 1)
 		{
@@ -81,6 +85,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			if (isEOF)
 			{
 				_printf("($) \n");
+				free(args);
 				return (0);
 			}
 			for (i = 0; i < BUFFER_SIZE; i++)
