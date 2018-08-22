@@ -22,7 +22,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	char *bufPtr = buffer;
 	char **args = malloc(sizeof(*args) * count);
 	int cond, status = 0, tokCount = 0, commandCount = 0;
-	int isEOF = 0;
+	/*int isEOF = 0;*/
 
 	signal(SIGINT, sigint_handler);
 	if (!args)
@@ -36,8 +36,8 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		cond = _getline(&bufPtr, &buf_size);
 		if (cond == -1 || cond == 0)
 			return (0);
-		if (buffer[cond - 1] != '\n')
-			isEOF = 1;
+		/*if (buffer[cond - 1] != '\n')
+		  isEOF = 1;*/
 		if (fflush(stdin) == EOF)
 		{
 			write(1, "Error: unable to flush stdin\n", 29);
@@ -76,11 +76,11 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		else
 		{
 			wait(&status);
-			if (isEOF)
+			/*if (isEOF)
 			{
 				_printf("($) \n");
 				return (0);
-			}
+				}*/
 			for (i = 0; i < BUFFER_SIZE; i++)
 				buffer[i] = 0;
 			status = 0;
