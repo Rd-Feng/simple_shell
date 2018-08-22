@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include "myShell.h"
 #include "holberton.h" /* for _printf */
 #define BUFFER_SIZE 1024
@@ -23,6 +24,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	int cond, status = 0, tokCount = 0, commandCount = 0;
 	int isEOF = 0;
 
+	signal(SIGINT, sigint_handler);
 	if (!args)
 		exit(-1);
 	while (1)
@@ -32,13 +34,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		_printf("($) ");
 		commandCount++;
 		cond = _getline(&bufPtr, &buf_size);
-		if (*bufPtr == '\n')
-			continue;
-		if (cond == -1)
-		{
-			return (0);
-		}
-		if (cond == 0)
+		if (cond == -1 || cond == 0)
 			return (0);
 		if (buffer[cond - 1] != '\n')
 			isEOF = 1;
@@ -48,6 +44,8 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			exit(98);
 		}
 		tokCount = process_string(bufPtr, &args, &count);
+		if (tokCount == 0)
+			continue;
 		if (!_strcmp(args[0], "exit"))
 		{
 			free(args);
