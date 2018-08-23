@@ -39,12 +39,13 @@ char *_get_env(char *name)
  * @overwrite: bool to tell us to overwrite exisitng value;
  * Return: a pointer to the corresponding value string.
 */
-
 int _setenv(char **env, char *name, char *value)
 {
 	size_t i = 0;
 	char *eqs = NULL;
+	// char **newEnv = NULL;
 
+	name = str_concat(name, "=");
 	while (env[i] != NULL)
 	{
 		printf("%s\n", env[i]);
@@ -59,14 +60,25 @@ int _setenv(char **env, char *name, char *value)
 	}
 	if (!eqs)
 	{
-		env = _realloc(env, i, i + 1);
-		if (!(env))
-		{
-			_printf("realloc error\n");
-			exit(-1);
-		}
-		env[i + 1] = str_concat(name, "=");
-		env[i + 1] = str_concat(env[i + 1], value);
+		// newEnv = malloc(8 * (i + 1));
+		// if (!(newEnv))
+		// {
+		// 	_printf("malloc error\n");
+		// 	exit(-1);
+		// }
+		// if (newEnv)
+		// {
+		// 	for (j = 0; j <= i; j++)
+		// 		newEnv[j] = NULL;
+		// 	for (j = 0; j < i; j++)
+		// 	{
+		// 		newEnv[j] = env[j];
+		// 	}
+		// 	// free(env);
+		// 	&env = newEnv;
+		// }
+		*env = _realloc(env, i, i + 1);
+		env[i] = str_concat(name, value);
 	}
 	
 	return (0);

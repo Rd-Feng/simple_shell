@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 /**
  * _realloc - reallocates a memory block using malloc
  * @ptr: old block
