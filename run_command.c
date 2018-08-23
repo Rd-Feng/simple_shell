@@ -26,7 +26,7 @@ char *_getenv(char *name, char **env)
 			}
 		}
 		if (found)
-			return (_strdup(*env));
+			return (_strdup(*env + len + 1));
 		env++;
 	}
 	return (NULL);

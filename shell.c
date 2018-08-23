@@ -39,7 +39,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		status = run_command(&args, env, tokCount);
 		if (status)
 			_printf("%s: %d: %s: No such file or directory\n",
-                                argv[0], inputCount, args[0]);
+				argv[0], inputCount, args[0]);
 		for (i = 0; i < BUFFER_SIZE; i++)
 			buffer[i] = 0;
 		tokCount = 0;
