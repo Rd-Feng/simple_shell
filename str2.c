@@ -20,7 +20,8 @@ char *_strcpy(char *dest, const char *src)
 		dest[i] = src[i];
 		i++;
 	}
-	dest[i] = '\0';
+	if (src[i] == '\n')
+		dest[i] = '\n';
 	return (dest);
 }
 

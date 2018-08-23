@@ -25,7 +25,7 @@ int _setenv(list_t **env, char *name, char *value)
 			eqs = _strchr(h->str, '=');
 			if (eqs)
 				*(eqs + 1) = '\0';
-			h->str = str_concat(h->str, value);			
+			h->str = str_concat(h->str, value);
 		}
 		h = h->next;
 	}
@@ -34,6 +34,6 @@ int _setenv(list_t **env, char *name, char *value)
 		name = str_concat(name, value);
 		add_node_end(env, name);
 	}
-	
+
 	return (0);
 }
