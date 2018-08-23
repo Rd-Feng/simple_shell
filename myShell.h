@@ -21,4 +21,9 @@ void *_realloc(char **ptr, unsigned int old_size, unsigned int new_size);
 void print_env(char **);
 
 void sigint_handler(int);
+
+int _atoi(char *s);
+
+int _setenv(char **env, char *name, char *value);
+
 #endif

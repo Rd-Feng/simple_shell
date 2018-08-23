@@ -48,8 +48,21 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			continue;
 		if (!_strcmp(args[0], "exit"))
 		{
+			if (args[1])
+				status = _atoi(args[1]);
+			else
+				status = 0;
 			free(args);
-			return (0);
+			return (status);
+		}
+		if (!_strcmp(args[0], "setenv") && tokCount == 3)
+		{
+			_setenv(env, args[1], args[2]);
+			for (i = 0; i < BUFFER_SIZE; i++)
+				buffer[i] = 0;
+			status = 0;
+			tokCount = 0;
+			continue;
 		}
 		if (!_strcmp(args[0], "env") && tokCount == 1)
 		{
@@ -79,6 +92,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			/*if (isEOF)
 			{
 				_printf("($) \n");
+				free(args);
 				return (0);
 				}*/
 			for (i = 0; i < BUFFER_SIZE; i++)
