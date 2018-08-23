@@ -14,7 +14,7 @@ int _strcmp(char *, char *);
 
 char *_strtok(char *, char *);
 
-void run_command(char **args, char **env);
+int run_command(char ***args, char **env, int tokCount);
 
 void *_realloc(char **ptr, unsigned int old_size, unsigned int new_size);
 
