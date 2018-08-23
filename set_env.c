@@ -1,35 +1,7 @@
 #include <stdlib.h>
 #include "myShell.h"
 #include "holberton.h"
-
-/*
- * getenv -function searches the environment list to find the
- * environment variable name, and returns a pointer to the corresponding
- * value string.
- * @name: string to search env for
- * Return: a pointer to the corresponding value string.
-*/
-char *_get_env(char *name)
-{
-	extern char **environ;
-	size_t i = 0;
-	char *eqs;
-
-	while (environ[i] != NULL)
-	{
-		printf("%s\n", environ[i]);
-		if (_strcmp(name, environ[i]) == 0)
-		{
-			eqs = _strchr(environ[i], '=');
-			if (eqs)
-				eqs += 1;
-		}
-		i++;
-	}
-	
-	return (eqs);
-}
-
+#include "lists.h"
 /*
  * setenv -function searches the environment list to find the
  * environment variable name, and sets to the corresponding
@@ -39,46 +11,28 @@ char *_get_env(char *name)
  * @overwrite: bool to tell us to overwrite exisitng value;
  * Return: a pointer to the corresponding value string.
 */
-int _setenv(char **env, char *name, char *value)
+int _setenv(list_t **env, char *name, char *value)
 {
-	size_t i = 0;
 	char *eqs = NULL;
-	// char **newEnv = NULL;
+	list_t *h;
 
+	h = *env;
 	name = str_concat(name, "=");
-	while (env[i] != NULL)
+	while (h->next != NULL)
 	{
-		printf("%s\n", env[i]);
-		if (_strcmp(name, env[i]) == 0)
+		if (_strcmp(name, h->str) == 0)
 		{
-			eqs = _strchr(env[i], '=');
+			eqs = _strchr(h->str, '=');
 			if (eqs)
 				*(eqs + 1) = '\0';
-			env[i] = str_concat(env[i], value);			
+			h->str = str_concat(h->str, value);			
 		}
-		i++;
+		h = h->next;
 	}
 	if (!eqs)
 	{
-		// newEnv = malloc(8 * (i + 1));
-		// if (!(newEnv))
-		// {
-		// 	_printf("malloc error\n");
-		// 	exit(-1);
-		// }
-		// if (newEnv)
-		// {
-		// 	for (j = 0; j <= i; j++)
-		// 		newEnv[j] = NULL;
-		// 	for (j = 0; j < i; j++)
-		// 	{
-		// 		newEnv[j] = env[j];
-		// 	}
-		// 	// free(env);
-		// 	&env = newEnv;
-		// }
-		*env = _realloc(env, i, i + 1);
-		env[i] = str_concat(name, value);
+		name = str_concat(name, value);
+		add_node_end(env, name);
 	}
 	
 	return (0);

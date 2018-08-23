@@ -4,6 +4,7 @@
 #include <sys/wait.h>
 #include "myShell.h"
 #include "holberton.h" /* for _printf */
+#include "lists.h" /* linked lists */
 #define BUFFER_SIZE 1024
 /**
  * main - entry point for simple shell
@@ -22,9 +23,14 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	char **args = malloc(sizeof(*args) * count);
 	int cond, status = 0, tokCount = 0, commandCount = 0;
 	int isEOF = 0;
+    list_t *envHead = NULL;
+
 
 	if (!args)
 		exit(-1);
+	if (env)
+		for (i = 0; env[i]; i++)
+			add_node_end(&envHead, env[i]);
 	while (1)
 	{
 		for (i = 0; i < count; i++)
@@ -59,7 +65,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		}
 		if (!_strcmp(args[0], "setenv") && tokCount == 3)
 		{
-			_setenv(env, args[1], args[2]);
+			_setenv(&envHead, args[1], args[2]);
 			for (i = 0; i < BUFFER_SIZE; i++)
 				buffer[i] = 0;
 			status = 0;
@@ -68,7 +74,8 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		}
 		if (!_strcmp(args[0], "env") && tokCount == 1)
 		{
-			print_env(env);
+			print_list(envHead);
+			// print_env(env);
 			for (i = 0; i < BUFFER_SIZE; i++)
 				buffer[i] = 0;
 			status = 0;

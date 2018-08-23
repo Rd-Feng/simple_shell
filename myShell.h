@@ -22,7 +22,5 @@ void print_env(char **);
 
 int _atoi(char *s);
 
-int _setenv(char **env, char *name, char *value);
-
 
 #endif
