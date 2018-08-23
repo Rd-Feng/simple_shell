@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "myShell.h"
 #include "holberton.h"
 
@@ -39,23 +40,33 @@ char *_get_env(char *name)
  * Return: a pointer to the corresponding value string.
 */
 
-int _setenv(char *name, char *value, int overwrite)
+int _setenv(char **env, char *name, char *value)
 {
-	extern char **environ;
 	size_t i = 0;
-	char *eqs;
+	char *eqs = NULL;
 
-	while (environ[i] != NULL)
+	while (env[i] != NULL)
 	{
-		printf("%s\n", environ[i]);
-		if (_strcmp(name, environ[i]) == 0)
+		printf("%s\n", env[i]);
+		if (_strcmp(name, env[i]) == 0)
 		{
-			eqs = _strchr(environ[i], '=');
+			eqs = _strchr(env[i], '=');
 			if (eqs)
 				*(eqs + 1) = '\0';
-			environ[i] = str_concat(environ[i], value);			
+			env[i] = str_concat(env[i], value);			
 		}
 		i++;
+	}
+	if (!eqs)
+	{
+		env = _realloc(env, i, i + 1);
+		if (!(env))
+		{
+			_printf("realloc error\n");
+			exit(-1);
+		}
+		env[i + 1] = str_concat(name, "=");
+		env[i + 1] = str_concat(env[i + 1], value);
 	}
 	
 	return (0);
