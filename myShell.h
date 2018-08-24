@@ -52,4 +52,7 @@ void sigint_handler(int);
 int _atoi(char *s);
 
 char *_getenv(char *name, param_t *params);
+
+int _setenv(param_t *params, char *name, char *value);
+
 #endif

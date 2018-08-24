@@ -11,12 +11,11 @@
  * @value: val to set our env
  * Return: a pointer to the corresponding value string.
 */
-int _setenv(list_t **env, char *name, char *value)
+int _setenv(param_t *params, char *name, char *value)
 {
 	char *eqs = NULL;
-	list_t *h;
+	list_t *h = params->env_head;
 
-	h = *env;
 	name = str_concat(name, "=");
 	while (h->next != NULL)
 	{
@@ -32,7 +31,9 @@ int _setenv(list_t **env, char *name, char *value)
 	if (!eqs)
 	{
 		name = str_concat(name, value);
-		add_node_end(env, name);
+		// not working, there's something wrong with the tail node, causes free errors
+		// add_node_end(&(params->env_head), name); 
+		add_node(&(params->env_head), name);
 	}
 
 	return (0);

@@ -12,7 +12,7 @@ void run_command(param_t *params)
 {
 	char *path = NULL, *exePath = NULL, *exeArg = NULL, *tmp = NULL;
 	pid_t pid;
-	int status = 0;
+	int sts = 0;
 
 	if (!_strcmp((params->args)[0], "env") && params->tokCount == 1)
 	{
@@ -22,15 +22,34 @@ void run_command(param_t *params)
 	}
 	if (!_strcmp((params->args)[0], "exit"))
 	{
+		/* TODO: break out to separate function  */	
 		if ((params->args)[1])
+		{
 			/* TODO: check if the argument is a valid number */
-			status = _atoi((params->args)[1]);
-		/* TODO: free parameters */
-		exit(status);
+			sts = 0;
+			tmp = (params->args)[1];
+			while (tmp[sts] != '\0')
+			{
+				if ((sts == 0 && tmp[sts] == '-') || (tmp[sts] >= '0' && tmp[sts] <= '9'))
+					sts++;
+				else
+				{
+					_printf("exit: Illegal number: %s\n", tmp);
+					return;
+				}
+			}
+			sts = _atoi((params->args)[1]);
+			/* TODO: free parameters */
+			free(params->buffer);
+			free(params->args);
+			free_list(params->env_head);
+			free(params);
+		}
+		exit(sts);
 	}
 	if (!_strcmp((params->args)[0], "setenv") && params->tokCount == 3)
 	{
-		/*_setenv(env, (*args)[1], (*args)[2]);*/
+		_setenv(params, (params->args)[1], (params->args)[2]);
 		params->status = 0;
 		return;
 	}
@@ -63,8 +82,8 @@ void run_command(param_t *params)
 	}
 	else
 	{
-		wait(&status);
-		if (status)
+		wait(&sts);
+		if (sts)
 			params->status = CMD_NOT_RUN;
 	}
 }

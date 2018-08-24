@@ -96,7 +96,10 @@ list_t *add_node_end(list_t **head, char *str)
 		return (*head);
 	}
 	while (h->next)
+	{
+		_printf("setenv node end %s\n", h->str);
 		h = h->next;
+	}
 	h->next = new;
 	return (*head);
 }
@@ -116,6 +119,7 @@ void free_list(list_t *head)
 	{
 		new = head;
 		head = head->next;
+		_printf("free list %s\n", new->str);
 		free(new->str);
 		free(new);
 	}
