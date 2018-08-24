@@ -5,6 +5,7 @@
 #include "myShell.h"
 #include "holberton.h" /* for _printf */
 #define BUFFER_SIZE 1024
+void init_param(param_t *, char **argv, char **env);
 /**
  * main - entry point for simple shell
  * @argc: argument count
@@ -15,33 +16,75 @@
  */
 int main(int __attribute__((unused)) argc, char **argv, char **env)
 {
-	size_t i, buf_size = BUFFER_SIZE, count = 10;
-	char buffer[BUFFER_SIZE] = {0};
-	char *bufPtr = buffer;
-	char **args = malloc(sizeof(*args) * count);
-	int cond, tokCount = 0, inputCount = 0, status = 0;
+	param_t *params = malloc(sizeof(param_t));
+	int cond;
+	unsigned int i;
 
-	signal(SIGINT, sigint_handler);
-	if (!args)
+	if (!params)
 		exit(-1);
+	signal(SIGINT, sigint_handler);
+	init_param(params, argv, env);
 	while (1)
 	{
-		for (i = 0; i < count; i++)
-			args[i] = NULL;
+		for (i = 0; i < BUFFER_SIZE; i++)
+			(params->buffer)[i] = 0;
+		for (i = 0; i < params->argsCap; i++)
+			(params->args)[i] = NULL;
+		params->tokCount = 0;
+		params->status = 0;
 		_printf("($) ");
-		cond = _getline(&bufPtr, &buf_size);
-		inputCount++;
+		cond = _getline(params);
+		(params->inputCount)++;
 		if (cond == -1 || cond == 0)
 			return (0);
-		tokCount = process_string(bufPtr, &args, &count);
-		if (tokCount == 0)
+		params->tokCount = process_string(params);
+		if (params->tokCount == 0)
 			continue;
-		status = run_command(&args, env, tokCount);
-		if (status)
-			_printf("%s: %d: %s: No such file or directory\n",
-				argv[0], inputCount, args[0]);
-		for (i = 0; i < BUFFER_SIZE; i++)
-			buffer[i] = 0;
-		tokCount = 0;
+		run_command(params);
+		if (params->status)
+			_printf("%s: %d: %s: not found\n",
+				argv[0], params->inputCount,
+				(params->args)[0]);
+	}
+}
+/**
+ * init_param - initialize params
+ * @params: params
+ * @argv: command line argument
+ * @env: environment variables
+ */
+void init_param(param_t *params, char **argv, char **env)
+{
+	int i;
+
+	params->argv = argv;
+	params->buffer = malloc(BUFFER_SIZE);
+	if (!params->buffer)
+	{
+		free(params);
+		exit(-1);
+	}
+	params->args = malloc(sizeof(char *) * params->argsCap);
+	if (!params->args)
+	{
+		free(params->buffer);
+		free(params);
+		exit(-1);
+	}
+	params->argsCap = 10;
+	params->inputCount = 0;
+	params->tokCount = 0;
+	params->status = 0;
+	for (i = 0; env[i]; i++)
+	{
+		params->env_head = add_node(&(params->env_head), env[i]);
+		if (!params->env_head)
+		{
+			free(params->buffer);
+			free(params->args);
+			free_list(params->env_head);
+			free(params);
+			exit(-1);
+		}
 	}
 }

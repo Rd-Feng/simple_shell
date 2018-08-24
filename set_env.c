@@ -2,13 +2,13 @@
 #include "myShell.h"
 #include "holberton.h"
 #include "lists.h"
-/*
- * setenv -function searches the environment list to find the
+/**
+ * _setenv -function searches the environment list to find the
  * environment variable name, and sets to the corresponding
  * value string.
+ * @env: environment variables
  * @name: string to search env for
  * @value: val to set our env
- * @overwrite: bool to tell us to overwrite exisitng value;
  * Return: a pointer to the corresponding value string.
 */
 int _setenv(list_t **env, char *name, char *value)

@@ -1,12 +1,17 @@
 #include "holberton.h"
+#include "lists.h"
+#include "myShell.h"
 /**
  * print_env - print environment variables
- * @env: env variables
+ * @params: parameters
  */
-void print_env(char **env)
+void print_env(param_t *params)
 {
-	int i;
+	list_t *ptr = params->env_head;
 
-	for (i = 0; env[i]; i++)
-		_printf("%s\n", env[i]);
+	while (ptr && ptr->str)
+	{
+		_printf("%s\n", ptr->str);
+		ptr = ptr->next;
+	}
 }
