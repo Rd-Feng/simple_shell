@@ -32,9 +32,8 @@ size_t print_list(list_t *h)
 	for (count = 0; h != 0; count++)
 	{
 		if (h->str == NULL)
-			_printf("(nil)\n");
-		else
-			_printf("%s\n", h->str);
+			break;
+		_printf("%s\n", h->str);
 		h = h->next;
 	}
 	return (count);
@@ -72,12 +71,10 @@ list_t *add_node(list_t **head, char *str)
  *
  * Return: ptr to new head
  */
-
 list_t *add_node_end(list_t **head, char *str)
 {
 	list_t *new;
 	list_t *h;
-	size_t i = 0;
 
 	if (!head)
 		return (NULL);
@@ -86,9 +83,7 @@ list_t *add_node_end(list_t **head, char *str)
 	if (!new)
 		return (NULL);
 	new->str = _strdup(str);
-	while (str[i])
-		i++;
-	new->len = i;
+	new->len = _strlen(str);
 	new->next = NULL;
 	if (*head == NULL)
 	{
@@ -97,7 +92,6 @@ list_t *add_node_end(list_t **head, char *str)
 	}
 	while (h->next)
 	{
-		_printf("setenv node end %s\n", h->str);
 		h = h->next;
 	}
 	h->next = new;
@@ -105,12 +99,9 @@ list_t *add_node_end(list_t **head, char *str)
 }
 
 /**
-* free_list - clears a linked list from mem
-* @head: ptr to head of linked list
-*
-* Return: nope void
-*/
-
+ * free_list - clears a linked list from mem
+ * @head: ptr to head of linked list
+ */
 void free_list(list_t *head)
 {
 	list_t *new;
@@ -119,7 +110,6 @@ void free_list(list_t *head)
 	{
 		new = head;
 		head = head->next;
-		_printf("free list %s\n", new->str);
 		free(new->str);
 		free(new);
 	}

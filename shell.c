@@ -31,20 +31,15 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		for (i = 0; i < params->argsCap; i++)
 			(params->args)[i] = NULL;
 		params->tokCount = 0;
-		params->status = 0;
 		_printf("($) ");
 		cond = _getline(params);
-		(params->inputCount)++;
+		params->inputCount++;
 		if (cond == -1 || cond == 0)
 			return (0);
 		params->tokCount = process_string(params);
 		if (params->tokCount == 0)
 			continue;
 		run_command(params);
-		if (params->status)
-			_printf("%s: %d: %s: not found\n",
-				argv[0], params->inputCount,
-				(params->args)[0]);
 	}
 }
 /**
@@ -59,13 +54,13 @@ void init_param(param_t *params, char **argv, char **env)
 
 	params->argv = argv;
 	params->buffer = malloc(BUFFER_SIZE);
-	if (!params->buffer)
+	if (!(params->buffer))
 	{
 		free(params);
 		exit(-1);
 	}
 	params->args = malloc(sizeof(char *) * params->argsCap);
-	if (!params->args)
+	if (!(params->args))
 	{
 		free(params->buffer);
 		free(params);
@@ -78,7 +73,7 @@ void init_param(param_t *params, char **argv, char **env)
 	for (i = 0; env[i]; i++)
 	{
 		params->env_head = add_node(&(params->env_head), env[i]);
-		if (!params->env_head)
+		if (!(params->env_head))
 		{
 			free(params->buffer);
 			free(params->args);

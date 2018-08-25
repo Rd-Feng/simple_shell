@@ -2,7 +2,7 @@
 #define MY_SHELL_H
 #include <stdio.h>
 #include "lists.h"
-#define CMD_NOT_RUN 1
+#define NOT_FOUND 1
 /**
  * struct param_s - structure used to hold all shell variables needed
  * @argv: command line argument from main function
@@ -53,6 +53,7 @@ int _atoi(char *s);
 
 char *_getenv(char *name, param_t *params);
 
-int _setenv(param_t *params, char *name, char *value);
+char *_setenv(param_t *params, char *name, char *value);
 
+char *get_file(param_t *params);
 #endif

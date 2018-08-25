@@ -10,10 +10,11 @@
  */
 void run_command(param_t *params)
 {
-	char *path = NULL, *exePath = NULL, *exeArg = NULL, *tmp = NULL;
+	char *exeFile = NULL, *tmp = NULL;
 	pid_t pid;
 	int sts = 0;
 
+	params->status = 0;
 	if (!_strcmp((params->args)[0], "env") && params->tokCount == 1)
 	{
 		print_env(params);
@@ -22,7 +23,7 @@ void run_command(param_t *params)
 	}
 	if (!_strcmp((params->args)[0], "exit"))
 	{
-		/* TODO: break out to separate function  */	
+		/* TODO: break out to separate function  */
 		if ((params->args)[1])
 		{
 			/* TODO: check if the argument is a valid number */
@@ -39,7 +40,6 @@ void run_command(param_t *params)
 				}
 			}
 			sts = _atoi((params->args)[1]);
-			/* TODO: free parameters */
 			free(params->buffer);
 			free(params->args);
 			free_list(params->env_head);
@@ -49,8 +49,18 @@ void run_command(param_t *params)
 	}
 	if (!_strcmp((params->args)[0], "setenv") && params->tokCount == 3)
 	{
-		_setenv(params, (params->args)[1], (params->args)[2]);
+		tmp = _setenv(params, (params->args)[1], (params->args)[2]);
+		_printf("New environment set: %s\n", tmp);
 		params->status = 0;
+		return;
+	}
+	exeFile = get_file(params);
+	if (!exeFile)
+	{
+		params->status = NOT_FOUND;
+		_printf("%s: %d: %s: not found\n",
+			params->argv[0], params->inputCount,
+			params->args[0]);
 		return;
 	}
 	pid = fork();
@@ -58,32 +68,10 @@ void run_command(param_t *params)
 		exit(98);
 	else if (pid == 0)
 	{
-		path = _getenv("PATH", params);
-		if (!path)
-			exit(-1);
-		execve((params->args)[0], params->args, NULL);
-		exePath = _strtok(path, ":");
-		while (exePath)
-		{
-			tmp = exeArg;
-			exeArg = str_concat(exePath, "/");
-			free(tmp);
-			tmp = exeArg;
-			exeArg = str_concat(exeArg, (params->args)[0]);
-			free(tmp);
-			execve(exeArg, params->args, NULL);
-			free(exeArg);
-			exeArg = NULL;
-			exePath = _strtok(NULL, ":");
-		}
-		/* TODO: free params */
-		free(path);
-		exit(98);
+		execve(exeFile, params->args, NULL);
 	}
 	else
 	{
-		wait(&sts);
-		if (sts)
-			params->status = CMD_NOT_RUN;
+		wait(NULL);
 	}
 }

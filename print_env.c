@@ -1,17 +1,27 @@
 #include "holberton.h"
 #include "lists.h"
 #include "myShell.h"
+void print_list_reverse(list_t *);
+
 /**
  * print_env - print environment variables
  * @params: parameters
  */
 void print_env(param_t *params)
 {
-	list_t *ptr = params->env_head;
+	print_list_reverse(params->env_head);
+}
 
-	while (ptr && ptr->str)
+/**
+ * print_list_reverse - print a list in reverse order
+ * @head: head of list
+ */
+void print_list_reverse(list_t *head)
+{
+	if (head)
 	{
-		_printf("%s\n", ptr->str);
-		ptr = ptr->next;
+		print_list_reverse(head->next);
+		if (head->str)
+			_printf("%s\n", head->str);
 	}
 }
