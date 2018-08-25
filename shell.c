@@ -5,7 +5,7 @@
 #include "myShell.h"
 #include "holberton.h" /* for _printf */
 #define BUFFER_SIZE 1024
-void init_param(param_t *, char **argv, char **env);
+param_t *init_param(param_t *, char **argv, char **env);
 /**
  * main - entry point for simple shell
  * @argc: argument count
@@ -16,14 +16,15 @@ void init_param(param_t *, char **argv, char **env);
  */
 int main(int __attribute__((unused)) argc, char **argv, char **env)
 {
-	param_t *params = malloc(sizeof(param_t));
+	param_t *params = NULL;
 	int cond;
 	unsigned int i;
 
+	params = malloc(sizeof(param_t));
+	params = init_param(params, argv, env);
 	if (!params)
 		exit(-1);
 	signal(SIGINT, sigint_handler);
-	init_param(params, argv, env);
 	while (1)
 	{
 		for (i = 0; i < BUFFER_SIZE; i++)
@@ -47,13 +48,20 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
  * @params: params
  * @argv: command line argument
  * @env: environment variables
+ * Return: param on success
  */
-void init_param(param_t *params, char **argv, char **env)
+param_t *init_param(param_t *params, char **argv, char **env)
 {
 	int i;
 
+	if (!params)
+		return (NULL);
+	params->argsCap = 10;
+	params->inputCount = 0;
+	params->tokCount = 0;
+	params->status = 0;
 	params->argv = argv;
-	params->buffer = malloc(BUFFER_SIZE);
+	params->buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	if (!(params->buffer))
 	{
 		free(params);
@@ -66,10 +74,6 @@ void init_param(param_t *params, char **argv, char **env)
 		free(params);
 		exit(-1);
 	}
-	params->argsCap = 10;
-	params->inputCount = 0;
-	params->tokCount = 0;
-	params->status = 0;
 	for (i = 0; env[i]; i++)
 	{
 		params->env_head = add_node(&(params->env_head), env[i]);
@@ -82,4 +86,5 @@ void init_param(param_t *params, char **argv, char **env)
 			exit(-1);
 		}
 	}
+	return (params);
 }
