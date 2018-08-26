@@ -45,7 +45,7 @@ void run_command(param_t *);
 
 void *_realloc(char **ptr, unsigned int old_size, unsigned int new_size);
 
-void print_env(param_t *);
+void _printenv(param_t *);
 
 void sigint_handler(int);
 
@@ -53,7 +53,12 @@ int _atoi(char *s);
 
 char *_getenv(char *name, param_t *params);
 
-char *_setenv(param_t *params, char *name, char *value);
+void _setenv(param_t *params);
 
 char *get_file(param_t *params);
+
+void (*get_buildin(param_t *params))(param_t *);
+
+void _myExit(param_t *params);
+
 #endif

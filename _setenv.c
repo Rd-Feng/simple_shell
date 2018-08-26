@@ -7,17 +7,15 @@
  * environment variable name, and sets to the corresponding
  * value string.
  * @params: parameters
- * @name: string to search env for
- * @value: val to set our env
- * Return: a pointer to the corresponding value string.
 */
-char *_setenv(param_t *params, char *name, char *value)
+void _setenv(param_t *params)
 {
 	char *eqs = NULL, *tmp = NULL;
+	char *name = params->args[1], *value = params->args[2];
 	list_t *h = params->env_head;
 
 	name = str_concat(name, "=");
-	while (h->str)
+	while (h)
 	{
 		if (_strcmp(name, h->str) == 0) /* env var exists */
 		{
@@ -27,7 +25,10 @@ char *_setenv(param_t *params, char *name, char *value)
 			free(tmp);
 			h->str = str_concat(name, value);
 			free(name);
-			return (h->str);
+			_printf("Environment variable set: %s\n",
+				h->str);
+			params->status = 0;
+			return;
 		}
 		h = h->next;
 	}
@@ -35,6 +36,6 @@ char *_setenv(param_t *params, char *name, char *value)
 	name = str_concat(name, value);
 	free(tmp);
 	params->env_head = add_node(&(params->env_head), name);
-	_printf("new env: %s\n", params->env_head->str);
-	return (params->env_head->str);
+	_printf("New environment variable set: %s\n", params->env_head->str);
+	params->status = 0;
 }

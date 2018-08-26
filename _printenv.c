@@ -7,9 +7,10 @@ void print_list_reverse(list_t *);
  * print_env - print environment variables
  * @params: parameters
  */
-void print_env(param_t *params)
+void _printenv(param_t *params)
 {
 	print_list_reverse(params->env_head);
+	params->status = 0;
 }
 
 /**
