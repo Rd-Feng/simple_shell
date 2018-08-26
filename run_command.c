@@ -40,5 +40,6 @@ void run_command(param_t *params)
 	else
 	{
 		wait(NULL);
+		free(exeFile);
 	}
 }
