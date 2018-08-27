@@ -24,10 +24,13 @@ int validNum(char *s)
 void _myExit(param_t *params)
 {
 	int status = 0;
+	unsigned int i;
 
 	if (!params->args[1])
 	{
 		free(params->buffer);
+		for (i = 0; i < params->argsCap; i++)
+			free(params->args[i]);
 		free(params->args);
 		free_list(params->env_head);
 		free(params);
@@ -37,6 +40,8 @@ void _myExit(param_t *params)
 	{
 		status = _atoi((params->args)[1]);
 		free(params->buffer);
+		for (i = 0; i < params->argsCap; i++)
+			free(params->args[i]);
 		free(params->args);
 		free_list(params->env_head);
 		free(params);

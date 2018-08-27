@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include "myShell.h"
+#include "holberton.h"
 /**
  * isDelim - check if a character is one of the delimiters
  * @c: character
@@ -51,5 +53,5 @@ char *_strtok(char *str, char *delim)
 	while (*modifier && !isDelim(*modifier, delim))
 		modifier++;
 	*modifier = '\0';
-	return (ptr);
+	return (_strdup(ptr));
 }

@@ -33,11 +33,14 @@ char *get_file(param_t *params)
 		if (access(exeArg, F_OK) == 0)
 		{
 			free(path);
+			free(exePath);
 			return (exeArg);
 		}
+		free(exePath);
 		exePath = _strtok(NULL, ":");
 	}
 	free(path);
+	free(exePath);
 	free(exeArg);
 	return (NULL);
 }

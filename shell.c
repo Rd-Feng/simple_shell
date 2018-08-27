@@ -29,7 +29,10 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		for (i = 0; i < BUFFER_SIZE; i++)
 			(params->buffer)[i] = 0;
 		for (i = 0; i < params->argsCap; i++)
-			(params->args)[i] = NULL;
+		{
+			free(params->args[i]);
+			params->args[i] = NULL;
+		}
 		params->tokCount = 0;
 		_printf("($) ");
 		cond = _getline(params);
@@ -50,7 +53,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
  */
 param_t *init_param(char **argv, char **env)
 {
-	int i;
+	unsigned int i;
 	param_t *params = malloc(sizeof(*params));
 
 	if (!params)
@@ -73,6 +76,8 @@ param_t *init_param(char **argv, char **env)
 		free(params);
 		exit(-1);
 	}
+	for (i = 0; i < params->argsCap; i++)
+		params->args[i] = NULL;
 	params->env_head = NULL;
 	for (i = 0; env[i]; i++)
 	{
