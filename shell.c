@@ -5,7 +5,7 @@
 #include "myShell.h"
 #include "holberton.h" /* for _printf */
 #define BUFFER_SIZE 1024
-param_t *init_param(param_t *, char **argv, char **env);
+param_t *init_param(char **argv, char **env);
 /**
  * main - entry point for simple shell
  * @argc: argument count
@@ -20,8 +20,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	int cond;
 	unsigned int i;
 
-	params = malloc(sizeof(param_t));
-	params = init_param(params, argv, env);
+	params = init_param(argv, env);
 	if (!params)
 		exit(-1);
 	signal(SIGINT, sigint_handler);
@@ -45,14 +44,14 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 }
 /**
  * init_param - initialize params
- * @params: params
  * @argv: command line argument
  * @env: environment variables
  * Return: param on success
  */
-param_t *init_param(param_t *params, char **argv, char **env)
+param_t *init_param(char **argv, char **env)
 {
 	int i;
+	param_t *params = malloc(sizeof(*params));
 
 	if (!params)
 		return (NULL);

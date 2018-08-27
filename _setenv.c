@@ -14,6 +14,12 @@ void _setenv(param_t *params)
 	char *name = params->args[1], *value = params->args[2];
 	list_t *h = params->env_head;
 
+	if (params->tokCount != 3)
+	{
+		write(STDERR_FILENO,
+		      "Usage: setenv VARIABLE VALUE\n", 29);
+		return;
+	}
 	name = str_concat(name, "=");
 	while (h)
 	{

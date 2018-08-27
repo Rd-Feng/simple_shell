@@ -12,16 +12,15 @@
  */
 char *get_file(param_t *params)
 {
-	char *path = _getenv("PATH", params);
+	char *path = NULL;
 	char *exePath = NULL, *exeArg = NULL, *tmp = NULL;
 
-	if (!path)
-		return (NULL);
 	if (access(params->args[0], F_OK) == 0)
 	{
 		free(path);
 		return (_strdup(params->args[0]));
 	}
+	path = _getenv("PATH", params);
 	exePath = _strtok(path, ":");
 	while (exePath)
 	{
@@ -39,5 +38,6 @@ char *get_file(param_t *params)
 		exePath = _strtok(NULL, ":");
 	}
 	free(path);
+	free(exeArg);
 	return (NULL);
 }

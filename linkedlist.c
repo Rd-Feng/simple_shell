@@ -104,13 +104,13 @@ list_t *add_node_end(list_t **head, char *str)
  */
 void free_list(list_t *head)
 {
-	list_t *new;
+	list_t *ptr = head;
 
 	while (head)
 	{
-		new = head;
-		head = head->next;
-		free(new->str);
-		free(new);
+		ptr = head->next;
+		free(head->str);
+		free(head);
+		head = ptr;
 	}
 }
