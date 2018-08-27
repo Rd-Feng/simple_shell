@@ -4,7 +4,7 @@
 void print_list_reverse(list_t *);
 
 /**
- * print_env - print environment variables
+ * _printenv - print environment variables
  * @params: parameters
  */
 void _printenv(param_t *params)

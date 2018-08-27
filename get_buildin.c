@@ -5,16 +5,6 @@
 #include "lists.h"
 #include "holberton.h"
 /**
- * struct op - a buildin function
- * @name: buildin name
- * @func: pointer to buildin function
- */
-typedef struct op
-{
-	char *name;
-	void (*func)(param_t *);
-} op_t;
-/**
  * get_buildin - get buildin function
  * @params: parameters
  *

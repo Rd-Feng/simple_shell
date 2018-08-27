@@ -18,7 +18,7 @@ int validNum(char *s)
 	return (1);
 }
 /**
- * _exit - buildin exit function
+ * _myExit - buildin exit function
  * @params: parameters
  */
 void _myExit(param_t *params)
@@ -40,7 +40,7 @@ void _myExit(param_t *params)
 		free(params->args);
 		free_list(params->env_head);
 		free(params);
-		exit (status);
+		exit(status);
 	}
 	else
 	{

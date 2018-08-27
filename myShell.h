@@ -29,6 +29,17 @@ typedef struct param_s
 	list_t *env_head;
 } param_t;
 
+/**
+ * struct op - a buildin function
+ * @name: buildin name
+ * @func: pointer to buildin function
+ */
+typedef struct op
+{
+	char *name;
+	void (*func)(param_t *);
+} op_t;
+
 int process_string(param_t *);
 
 char *_strdup(char *);
