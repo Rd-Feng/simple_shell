@@ -50,6 +50,6 @@ void _myExit(param_t *params)
 	else
 	{
 		_printf("%s: %d: exit: Illegal number: %s\n",
-			params->argv[0], params->inputCount, params->args[1]);
+			params->argv[0], params->lineCount, params->args[1]);
 	}
 }

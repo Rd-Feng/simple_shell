@@ -36,7 +36,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		params->tokCount = 0;
 		_printf("($) ");
 		cond = _getline(params);
-		params->inputCount++;
+		params->lineCount++;
 		if (cond == -1 || cond == 0)
 			return (0);
 		params->tokCount = process_string(params);
@@ -59,7 +59,7 @@ param_t *init_param(char **argv, char **env)
 	if (!params)
 		return (NULL);
 	params->argsCap = 10;
-	params->inputCount = 0;
+	params->lineCount = 0;
 	params->tokCount = 0;
 	params->status = 0;
 	params->argv = argv;
@@ -91,5 +91,6 @@ param_t *init_param(char **argv, char **env)
 			exit(-1);
 		}
 	}
+	params->command_head = NULL;
 	return (params);
 }

@@ -9,11 +9,11 @@
  * @buffer: input buffer
  * @args: array of arguments
  * @argsCap: num of arguments the args array can hold
- * @inputCount: total line of input
+ * @lineCount: total line of input
  * @tokCount: num of tokens in a line input
  * @status: run command return status
  * @env_head: singly linked list of environment vars
- *
+ * @command_head: singly linked list of commands
  * Description: This structures hold all variables that passed into
  * other functions.
  */
@@ -23,10 +23,11 @@ typedef struct param_s
 	char *buffer;
 	char **args;
 	unsigned int argsCap;
-	unsigned int inputCount;
+	unsigned int lineCount;
 	unsigned int tokCount;
 	int status;
 	list_t *env_head;
+	list_t *command_head;
 } param_t;
 
 /**

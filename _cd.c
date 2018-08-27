@@ -22,7 +22,7 @@ void _cd(param_t *params)
 	if (i)
 	{
 		_printf("%s: %d: cd: can't cd to %s",
-			params->argv[0], params->inputCount, target);
+			params->argv[0], params->lineCount, target);
 		free(target);
 		return;
 	}
