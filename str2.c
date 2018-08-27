@@ -48,7 +48,7 @@ int _strcmp(char *s1, char *s2)
 }
 
 /**
- * _strcmp_n - compares n bytes of two strings 
+ * _strcmp_n - compares n bytes of two strings
  * @s1: string 1
  * @s2: string 2
  * @n: number of bytes to comp
