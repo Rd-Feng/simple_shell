@@ -1,66 +1,45 @@
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include "myShell.h"
+#include "lists.h"
 #include "holberton.h"
 /**
- * _getenv - get environment variable
- * @name: variable name
- * @env: environment variables
- * Return: variable value on success, NULL otherwise
- */
-char *_getenv(char *name, char **env)
-{
-	unsigned int len = 0, i, found = 1;
-
-	while (name[len])
-		len++;
-	while (*env)
-	{
-		for (i = 0, found = 1; i < len; i++)
-		{
-			if (name[i] != (*env)[i])
-			{
-				found = 0;
-				break;
-			}
-		}
-		if (found)
-			return (_strdup(*env));
-		env++;
-	}
-	return (NULL);
-}
-
-/**
  * run_command - searches path dirs for command and execs
- * @args: args to feed to execve
- * @env: environment variables
- * Return: variable value on success, NULL otherwise
+ * @params: parameters
  */
-
-void run_command(char **args, char **env)
+void run_command(param_t *params)
 {
-	char *path = _getenv("PATH", env);
-	char *exePath = NULL;
-	char *exeArg = NULL;
-	char *tmp = NULL;
+	char *exeFile = NULL;
+	pid_t pid;
+	void (*buildin)(param_t *);
 
-	if (!path)
-		exit(-1);
-	execve(args[0], args, NULL);/* see if a valid path is given */
-	exePath = _strtok(path, ":");
-	while (exePath)
+	params->status = 0;
+	buildin = get_buildin(params);
+	if (buildin)
 	{
-		tmp = exeArg;
-		exeArg = str_concat(exePath, "/");
-		free(tmp);
-		tmp = exeArg;
-		exeArg = str_concat(exeArg, args[0]);
-		free(tmp);
-		execve(exeArg, args, NULL);
-		free(exeArg);
-		exeArg = NULL;
-		exePath = _strtok(NULL, ":");
+		buildin(params);
+		return;
 	}
-	free(path);
+	exeFile = get_file(params);
+	if (!exeFile)
+	{
+		params->status = NOT_FOUND;
+		_printf("%s: %d: %s: not found\n",
+			params->argv[0], params->inputCount,
+			params->args[0]);
+		return;
+	}
+	pid = fork();
+	if (pid < 0)
+		exit(98);
+	else if (pid == 0)
+	{
+		execve(exeFile, params->args, NULL);
+	}
+	else
+	{
+		wait(NULL);
+		free(exeFile);
+	}
 }

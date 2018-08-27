@@ -1,22 +1,26 @@
+#include <unistd.h>
+#include <stdio.h>
+#include "myShell.h"
+#include "holberton.h"
 /**
  * _strcpy - copies a string to anther memory adress
  * @src: pointer to the source string
  * @dest: pointer to the dest address
  *
- * Return: void just prints
+ * Return: pointer to the dest
  */
-
 char *_strcpy(char *dest, const char *src)
 {
 	int i;
 
 	i = 0;
-	while (src[i] != '\0' && src[i]!= '\n')
+	while (src[i] != '\0')
 	{
 		dest[i] = src[i];
 		i++;
 	}
-	dest[i] = '\0';
+	if (src[i] == '\n')
+		dest[i] = '\n';
 	return (dest);
 }
 
@@ -42,3 +46,33 @@ int _strcmp(char *s1, char *s2)
 	return (res);
 }
 
+/**
+ * _atoi - turn a str into an int
+ * @s: string to eval
+ * Return: n the value of the first number in the st0ring
+ */
+int _atoi(char *s)
+{
+	int i, n, posi;
+
+	i = 0;
+	n = 0;
+	posi = 1;
+
+	while (s[i] != '\0')
+	{
+		if (s[i] == '-')
+			posi *= -1;
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			if (posi == 1)
+				n = n * 10 + (s[i] - '0');
+			else
+				n = n * 10 - (s[i] - '0');
+			if (s[i + 1] < '0' || s[i + 1] > '9')
+				break;
+		}
+		i++;
+	}
+	return (n);
+}
