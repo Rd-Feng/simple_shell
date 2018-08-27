@@ -31,18 +31,16 @@ void _setenv(param_t *params)
 			free(tmp);
 			h->str = str_concat(name, value);
 			free(name);
-			_printf("Environment variable set: %s\n",
-				h->str);
 			params->status = 0;
 			return;
 		}
 		h = h->next;
 	}
+	/* env var DNE */
 	tmp = name;
 	name = str_concat(name, value);
 	free(tmp);
 	params->env_head = add_node(&(params->env_head), name);
 	free(name);
-	_printf("New environment variable set: %s\n", params->env_head->str);
 	params->status = 0;
 }

@@ -72,4 +72,6 @@ void (*get_buildin(param_t *params))(param_t *);
 
 void _myExit(param_t *params);
 
+void _cd(param_t *params);
+
 #endif

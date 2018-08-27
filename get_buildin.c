@@ -16,6 +16,7 @@ void (*get_buildin(param_t *params))(param_t *)
 		{"exit", _myExit},
 		{"env", _printenv},
 		{"setenv", _setenv},
+		{"cd", _cd},
 		{NULL, NULL},
 	};
 	op_t *op = ops;
