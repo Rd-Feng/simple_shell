@@ -73,6 +73,7 @@ param_t *init_param(char **argv, char **env)
 		free(params);
 		exit(-1);
 	}
+	params->env_head = NULL;
 	for (i = 0; env[i]; i++)
 	{
 		params->env_head = add_node(&(params->env_head), env[i]);
