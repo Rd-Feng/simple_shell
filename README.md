@@ -3,7 +3,7 @@ This is a shell interpreter project written in C.
 
 ## Goals of this project
 At the end of this project, we are expected to be able to explain to anyone, without the help of Google:
-* Ken Thompson designed and implemented the original Unix operating system..
+* That Ken Thompson designed and implemented the original Unix operating system..
 * And wrote the first version of the UNIX shell...
 * And invented the B programming language (the direct predecessor to the C programming language)
 * Who is Ken Thompson? ^^^
@@ -92,6 +92,10 @@ Alex Fariioletti https://github.com/thrownblown
 | _strtok | desc | args | retval | eaxmple |
 | run_command | desc | args | retval | eaxmple |
 | _realloc | desc | args | retval | eaxmple |
-| print_env | desc | args | retval | eaxmple |
+| _printenv | desc | args | retval | eaxmple |
 | sigint_handler | desc | args | retval | eaxmple |
 | _atoi | desc | args | retval | eaxmple |
+| _getenv | desc | args | retval | eaxmple |
+| get_file | desc | args | retval | eaxmple |
+| get_buildin | desc | args | retval | eaxmple |
+| _myExit | desc | args | retval | eaxmple |
