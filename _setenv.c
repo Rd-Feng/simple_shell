@@ -42,6 +42,7 @@ void _setenv(param_t *params)
 	name = str_concat(name, value);
 	free(tmp);
 	params->env_head = add_node(&(params->env_head), name);
+	free(name);
 	_printf("New environment variable set: %s\n", params->env_head->str);
 	params->status = 0;
 }
