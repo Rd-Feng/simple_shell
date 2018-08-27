@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <limits.h>
 #include "myShell.h"
 #include "holberton.h"
 /**
@@ -36,6 +37,12 @@ void _myExit(param_t *params)
 	if (validNum(params->args[1]))
 	{
 		status = _atoi((params->args)[1]);
+		if (status == -1)
+		{
+			_printf("%s: %d: exit: Illegal number: %s\n",
+				params->argv[0], params->inputCount, params->args[1]);
+			return;
+		}
 		free(params->buffer);
 		free(params->args);
 		free_list(params->env_head);
