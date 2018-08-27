@@ -17,13 +17,14 @@ void (*get_buildin(param_t *params))(param_t *)
 		{"env", _printenv},
 		{"setenv", _setenv},
 		{"cd", _cd},
+		{"unsetenv", _unsetenv},
 		{NULL, NULL},
 	};
 	op_t *op = ops;
 
 	while (op->name)
 	{
-		if (!_strcmp(params->args[0], op->name))
+		if (!_strcmp_n(params->args[0], op->name, _strlen(op->name)))
 			return (op->func);
 		op++;
 	}

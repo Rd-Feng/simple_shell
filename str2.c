@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <limits.h>
 #include "myShell.h"
 #include "holberton.h"
 /**
@@ -47,32 +48,54 @@ int _strcmp(char *s1, char *s2)
 }
 
 /**
+ * _strcmp_n - compares n bytes of two strings 
+ * @s1: string 1
+ * @s2: string 2
+ * @n: number of bytes to comp
+ *
+ * Return: int less than, equal to, or greater than 0 if s1 is, respectively
+ * less than, equal to, or greater than s2
+ */
+int _strcmp_n(char *s1, char *s2, int n)
+{
+	int i = 0, res = *s1 - *s2;
+
+	while (i <= n)
+	{
+		res = *(s1++) - *(s2++);
+		if (res != 0)
+			break;
+		i++;
+	}
+
+	return (res);
+}
+
+
+/**
  * _atoi - turn a str into an int
  * @s: string to eval
  * Return: n the value of the first number in the st0ring
  */
 int _atoi(char *s)
 {
-	int i, n, posi;
+	int i, n;
 
 	i = 0;
 	n = 0;
-	posi = 1;
 
 	while (s[i] != '\0')
 	{
-		if (s[i] == '-')
-			posi *= -1;
+		if (n > INT_MAX)
+			return (-1);
 		if (s[i] >= '0' && s[i] <= '9')
 		{
-			if (posi == 1)
-				n = n * 10 + (s[i] - '0');
-			else
-				n = n * 10 - (s[i] - '0');
+			n = n * 10 + (s[i] - '0');
 			if (s[i + 1] < '0' || s[i + 1] > '9')
 				break;
 		}
 		i++;
+
 	}
 	return (n);
 }
