@@ -50,6 +50,8 @@ int _getline(param_t *);
 
 int _strcmp(char *, char *);
 
+int _strcmp_n(char *, char *, int n);
+
 char *_strtok(char *str, char *delim);
 
 void run_command(param_t *);
@@ -65,6 +67,8 @@ int _atoi(char *s);
 char *_getenv(char *name, param_t *params);
 
 void _setenv(param_t *params);
+
+void _unsetenv(param_t *params);
 
 char *get_file(param_t *params);
 
