@@ -75,7 +75,6 @@ Alex Fariioletti https://github.com/thrownblown
 | _strlen | desc | args | retval | eaxmple |
 | _printf | desc | args | retval | eaxmple |
 | _strchr | desc | args | retval | eaxmple |
-
 | _putchar | desc | args | retval | eaxmple |
 | print_list | desc | args | retval | eaxmple |
 | list_len | desc | args | retval | eaxmple |
@@ -83,7 +82,6 @@ Alex Fariioletti https://github.com/thrownblown
 | add_node_end | desc | args | retval | eaxmple |
 | free_list | desc | args | retval | eaxmple |
 | _setenv | desc | args | retval | eaxmple |
-
 | process_string | desc | args | retval | eaxmple |
 | _strdup | desc | args | retval | eaxmple |
 | _strcpy | desc | args | retval | eaxmple |
