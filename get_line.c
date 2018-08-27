@@ -5,24 +5,18 @@
 
 /**
  * _getline - fetches a line of chars from stdin
- * @lineptr: ptr to a buffer to store the line
- * @n: size of the buffer
+ * @params: parameters
  *
- * Return: pointer to begining of mem area
+ * Return: number of char read
  */
 
-int _getline(char **lineptr, size_t *n)
+int _getline(param_t *params)
 {
 	static char line[BUFFER_SIZE];
 	unsigned int len, i;
 
-	if (lineptr == NULL || n == NULL)
-	{
-		return (-1);
-	}
-
 	len = read(0, line, BUFFER_SIZE);
-	_strcpy(*lineptr, line);
+	_strcpy(params->buffer, line);
 	for (i = 0; i < BUFFER_SIZE; i++)
 		line[i] = 0;
 	return (len);

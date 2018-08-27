@@ -4,33 +4,32 @@
 #include <stdio.h>
 /**
  * process_string - process a line of command into string tokens
+ * @params: parameters
  *
- * @bufPtr: line of command
- * @args: address of arg array
- * @count: number of tokens args can hold
- * Return: number of token found
+ * Return: number of tokens
  */
-int process_string(char *bufPtr, char ***args, size_t *count)
+int process_string(param_t *params)
 {
 	char *token = NULL;
-	unsigned int tokCount = 0;
 
-	token = _strtok(bufPtr, " \n\t");
-	(*args)[tokCount++] = token;
+	token = _strtok(params->buffer, " \n\t");
+	(params->args)[(params->tokCount)++] = token;
 	while (token)
 	{
 		token = _strtok(NULL, " \n\t");
-		(*args)[tokCount++] = token;
-		if (tokCount == *count)
+		(params->args)[(params->tokCount)++] = token;
+		if (params->tokCount == params->argsCap)
 		{
-			(*count) += 10;
-			*args = _realloc(*args, (*count) - 10, *count);
-			if (!(*args))
+			params->argsCap += 10;
+			params->args = _realloc(params->args,
+						params->argsCap - 10,
+						params->argsCap);
+			if (!(params->args))
 			{
 				write(1, "realloc error\n", 14);
 				exit(-1);
 			}
 		}
 	}
-	return (tokCount - 1);
+	return (params->tokCount - 1);
 }

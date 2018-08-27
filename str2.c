@@ -2,14 +2,13 @@
 #include <stdio.h>
 #include "myShell.h"
 #include "holberton.h"
- /**
+/**
  * _strcpy - copies a string to anther memory adress
  * @src: pointer to the source string
  * @dest: pointer to the dest address
  *
  * Return: pointer to the dest
  */
-
 char *_strcpy(char *dest, const char *src)
 {
 	int i;
