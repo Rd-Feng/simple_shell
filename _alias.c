@@ -41,39 +41,44 @@ void _alias(param_t * params)
 */
 void set_alias(char *name, param_t *params)
 {
-	char *tmp = NULL;
-	unsigned int i = 0;
+	char *tmp = NULL, *val;
+	unsigned int i = 0, len;
 	list_t *h = params->alias_head;
+
+	tmp = _strdup(name);
 
 	while(name[i] != '=')
 		i++;
+	len = _strlen(name);
+	if (name[i + 1] != '\'' && name[len - 1] != '\'')
+	{
+		//strip quotes
+		tmp[len - 1] = '\0';
+		val = _strdup(tmp[i + 2]);
+		free(tmp);
+		tmp = _strdup(name);
+	}
+	tmp[i] = '\0';
 
 	while (h)
 	{
-		if (_strcmp_n(name, h->str, i) == 0) /* env var exists */
+		if (_strcmp_n(name, h->str, i) == 0)
 		{
-			tmp = h->str;
-			h->str = _strdup(name);
-			if (h->str)
-			{
-				free(tmp);
-				params->status = 0;
-				return;
-			}
-			else
-			{
-				h->str = tmp;
-				params->status = -1;
-				return;
-			}
-
-
+			free(h->val);
+			h->val = _strdup(val);
+			h->val_len = i;
+			free(tmp);
+			free(val);
+			params->status = 0;
+			return;
 		}
 		h = h->next;
 	}
 	/* env var DNE */
+
 	params->alias_head = add_node(&(params->alias_head), name);
 	params->status = 0;
+	return;
 }
 
 /**
@@ -92,7 +97,7 @@ void get_alias(char *name, param_t *params)
 	while (ptr)
 	{
 		if (_strcmp_n(name, ptr->str, len - 1) == 0)
-			printf("%s\n", ptr->str);
+			_printf("%s=\'%s\'\n", ptr->str, ptr->val);
 		ptr = ptr->next;
 	}
 	params->status = 0;
@@ -105,7 +110,17 @@ void get_alias(char *name, param_t *params)
  */
 void print_all_alias(param_t *params)
 {
-	print_list_reverse(params->alias_head);
+	print_list_alias(params->alias_head);
 	params->status = 0;
 	return;
+}
+
+void print_list_alias(list_t *head)
+{
+	if (head)
+	{
+		print_list_reverse(head->next);
+		if (head->str)
+			_printf("%s=\'%s\'\n", head->str, head->val);
+	}
 }

@@ -85,5 +85,6 @@ void set_alias(char *name, param_t *params);
 void get_alias(char *name, param_t *params);
 void print_all_alias(param_t *params);
 void print_list_reverse(list_t *);
+void print_list_alias(list_t *);
 
 #endif
