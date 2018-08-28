@@ -29,6 +29,7 @@ void _setenv(param_t *params)
 			free(tmp);
 			h->val = _strdup(value);
 			h->val_len = _strlen(value);
+			_printf("Environment variable %s set to: %s\n",	params->args[1], params->args[2]);
 			params->status = 0;
 			return;
 		}
