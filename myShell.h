@@ -22,6 +22,7 @@ typedef struct param_s
 	char **argv;
 	char *buffer;
 	char **args;
+	char *nextCommand;
 	unsigned int argsCap;
 	unsigned int lineCount;
 	unsigned int tokCount;
@@ -53,7 +54,7 @@ int _strcmp(char *, char *);
 
 int _strcmp_n(char *, char *, int n);
 
-char *_strtok(char *str, char *delim);
+char *_strtok(char *str, char *delim, char **savePtr);
 
 void run_command(param_t *);
 
