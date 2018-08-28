@@ -21,7 +21,7 @@ void _cd(param_t *params)
 	i = chdir(target);
 	if (i)
 	{
-		_printf("%s: %d: cd: can't cd to %s",
+		_printf("%s: %d: cd: can't cd to %s\n",
 			params->argv[0], params->lineCount, target);
 		free(target);
 		return;

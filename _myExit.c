@@ -33,6 +33,7 @@ void _myExit(param_t *params)
 		for (i = 0; i < params->argsCap; i++)
 			free(params->args[i]);
 		free(params->args);
+		free(params->nextCommand);
 		free_list(params->env_head);
 		free(params);
 		exit(0);

@@ -19,30 +19,24 @@ int isDelim(char c, char *delim)
 	return (0);
 }
 /**
- * _strtok - strtok
+ * _strtok - strtok_r
  * @str: string to be passed
  * @delim: delimiters for tokens
+ * @savePtr: state
  *
  * Return: next token found in string, NULL if not found
  */
-char *_strtok(char *str, char *delim)
+char *_strtok(char *str, char *delim, char **savePtr)
 {
-	static char *ptr, *modifier, *end;
+	char *ptr, *modifier, *end;
 
-	if (str != NULL)
-	{
-		ptr = str;
-		modifier = str;
-		end = str;
-		while (*end)
-			end++;
-	}
+	if (*savePtr)
+		ptr = *savePtr;
 	else
-	{
-		if (modifier == end)
-			return (NULL);
-		ptr = modifier + 1;
-	}
+		ptr = str;
+	end = ptr;
+	while (*end)
+		end++;
 	while (*ptr && isDelim(*ptr, delim))
 		ptr++;
 	modifier = ptr;
@@ -50,8 +44,20 @@ char *_strtok(char *str, char *delim)
 	{
 		return (NULL);
 	}
-	while (*modifier && !isDelim(*modifier, delim))
-		modifier++;
+	if (*ptr == '\'')
+	{
+		ptr++;
+		modifier = _strchr(ptr, '\'');
+	}
+	else
+	{
+		while (*modifier && !isDelim(*modifier, delim))
+			modifier++;
+	}
+	if (*modifier == '\0')
+		*savePtr = modifier;
+	else
+		*savePtr = modifier + 1;
 	*modifier = '\0';
 	return (_strdup(ptr));
 }

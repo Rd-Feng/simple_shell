@@ -19,6 +19,8 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	param_t *params = NULL;
 	int cond;
 	unsigned int i;
+	char *state = NULL;
+	char sep[] = {59};
 
 	params = init_param(argv, env);
 	if (!params)
@@ -28,21 +30,30 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	{
 		for (i = 0; i < BUFFER_SIZE; i++)
 			(params->buffer)[i] = 0;
-		for (i = 0; i < params->argsCap; i++)
-		{
-			free(params->args[i]);
-			params->args[i] = NULL;
-		}
 		params->tokCount = 0;
 		_printf("($) ");
 		cond = _getline(params);
 		params->lineCount++;
 		if (cond == -1 || cond == 0)
 			return (0);
-		params->tokCount = process_string(params);
-		if (params->tokCount == 0)
-			continue;
-		run_command(params);
+		state = NULL;
+		params->nextCommand = _strtok(params->buffer, sep, &state);
+		while (params->nextCommand)
+		{
+			params->tokCount = process_string(params);
+			if (params->tokCount == 0)
+				continue;
+			run_command(params);
+			for (i = 0; i < params->argsCap; i++)
+			{
+				free(params->args[i]);
+				params->args[i] = NULL;
+			}
+			params->tokCount = 0;
+			free(params->nextCommand);
+			params->nextCommand = _strtok(params->buffer, ";",
+						      &state);
+		}
 	}
 }
 /**
@@ -63,6 +74,7 @@ param_t *init_param(char **argv, char **env)
 	params->tokCount = 0;
 	params->status = 0;
 	params->argv = argv;
+	params->nextCommand = NULL;
 	params->buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	if (!(params->buffer))
 	{
