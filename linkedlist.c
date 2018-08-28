@@ -67,6 +67,31 @@ list_t *add_node(list_t **head, char *str, char *val)
 }
 
 /**
+ * get_node - adds a new node at the beginning of a list_t list.
+ * @head: start of list
+ * @str: key
+ * Return: ptr to new node or null
+ */
+list_t *get_node(list_t **head, char *str)
+{
+	unsigned int i, j;
+	list_t *h;
+
+	if (!head)
+		return (NULL);
+	h = *head;
+	i = _strlen(str);
+	while(h)
+	{
+		j = _strlen(h->str);
+		if (i == j && _strcmp(str, h->str) == 0)
+			return (h);
+		else
+			h = h->next;
+	}
+	return (NULL);
+}
+/**
  * add_node_end - adds a new node at the end of a list_t list.
  * @head: start of list
  * @str: key
