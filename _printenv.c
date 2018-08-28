@@ -1,7 +1,6 @@
 #include "holberton.h"
 #include "lists.h"
 #include "myShell.h"
-void print_list_reverse(list_t *);
 
 /**
  * _printenv - print environment variables

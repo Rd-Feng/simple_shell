@@ -92,5 +92,6 @@ param_t *init_param(char **argv, char **env)
 		}
 	}
 	params->command_head = NULL;
+	params->alias_head = NULL;
 	return (params);
 }

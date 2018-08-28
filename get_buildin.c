@@ -18,6 +18,7 @@ void (*get_buildin(param_t *params))(param_t *)
 		{"setenv", _setenv},
 		{"cd", _cd},
 		{"unsetenv", _unsetenv},
+		{"alias", _alias},
 		{NULL, NULL},
 	};
 	op_t *op = ops;
