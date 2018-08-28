@@ -44,8 +44,16 @@ char *_strtok(char *str, char *delim, char **savePtr)
 	{
 		return (NULL);
 	}
-	while (*modifier && !isDelim(*modifier, delim))
-		modifier++;
+	if (*ptr == '\'')
+	{
+		ptr++;
+		modifier = _strchr(ptr, '\'');
+	}
+	else
+	{
+		while (*modifier && !isDelim(*modifier, delim))
+			modifier++;
+	}
 	if (*modifier == '\0')
 		*savePtr = modifier;
 	else
