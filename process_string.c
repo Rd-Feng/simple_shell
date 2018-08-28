@@ -18,9 +18,7 @@ int process_string(param_t *params)
 	if (node != NULL)
 	{
 		alias = _strdup(node->val);
-		eqs = _strchr(alias, ' ');
-		if (eqs)
-			*eqs = '\0';
+		val = _strtok(alias, " ", &state);
 		(params->args)[(params->tokCount)++] = val;
 		while (val)
 		{
