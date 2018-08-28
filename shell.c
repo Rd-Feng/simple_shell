@@ -65,6 +65,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 param_t *init_param(char **argv, char **env)
 {
 	unsigned int i;
+	char *eqs = NULL;
 	param_t *params = malloc(sizeof(*params));
 
 	if (!params)
@@ -93,7 +94,9 @@ param_t *init_param(char **argv, char **env)
 	params->env_head = NULL;
 	for (i = 0; env[i]; i++)
 	{
-		params->env_head = add_node(&(params->env_head), env[i]);
+		eqs = _strchr(env[i], '=');
+		*eqs = '\0';
+		params->env_head = add_node(&(params->env_head), env[i], eqs + 1);
 		if (!(params->env_head))
 		{
 			free(params->buffer);

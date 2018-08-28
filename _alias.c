@@ -3,25 +3,18 @@
 #include "holberton.h"
 #include "lists.h"
 
-
-
-
-void _alias(param_t * params)
+/**
+ * _alias - alias utility builtin, call apropos func
+ * @params: shell state
+ * Return: void
+*/
+void _alias(param_t *params)
 {
 	unsigned int i;
-	/**
-	Usage: alias [name[='value'] ...]
-	alias: Prints a list of all aliases, one per line, in the form name='value'
-	count commands
-	if 1 print all alias
-	alias name [name2 ...]: Prints the aliases name, name2, etc 1 per line, in the form name='value'
-	if 2 or more and no = print those names
-	alias name='value' [...]: Defines an alias for each name whose value is given. If name is already an alias, replaces its value with value
-	if 2 or more and = set alias
-	*/
+
 	if (params->tokCount == 1)
 	{
-		print_all_alias(params);
+		print_all_aliases(params);
 		return;
 	}
 	for (i = 1; i < params->tokCount; i++)
@@ -29,36 +22,34 @@ void _alias(param_t * params)
 		if (_strchr(params->args[i], '='))
 			set_alias(params->args[i], params);
 		else
-			get_alias(params->args[i], params);
+			print_alias(params->args[i], params);
 	}
 }
 
 /**
- * _setenv - function searches the environment list to find the
- * environment variable name, and sets to the corresponding
- * value string.
- * @params: parameters
+ * set_alias - function searches the alias list and sets to the corresponding
+ * @name: key/value string.
+ * @params: shell state
 */
 void set_alias(char *name, param_t *params)
 {
-	char *tmp = NULL, *val;
+	char *val;
 	unsigned int i = 0, len;
 	list_t *h = params->alias_head;
 
-	tmp = _strdup(name);
-
-	while(name[i] != '=')
+	while (name[i] != '=')
 		i++;
 	len = _strlen(name);
-	if (name[i + 1] != '\'' && name[len - 1] != '\'')
+	if (name[i + 1] == '\'' && name[len - 1] == '\'')
 	{
-		//strip quotes
-		tmp[len - 1] = '\0';
-		val = _strdup(tmp[i + 2]);
-		free(tmp);
-		tmp = _strdup(name);
+		name[len - 1] = '\0';
+		val = _strdup(&name[i + 2]);
 	}
-	tmp[i] = '\0';
+	else
+	{
+		val = _strdup(&name[i + 1]);
+	}
+	name[i] = '\0';
 
 	while (h)
 	{
@@ -67,7 +58,6 @@ void set_alias(char *name, param_t *params)
 			free(h->val);
 			h->val = _strdup(val);
 			h->val_len = i;
-			free(tmp);
 			free(val);
 			params->status = 0;
 			return;
@@ -76,19 +66,19 @@ void set_alias(char *name, param_t *params)
 	}
 	/* env var DNE */
 
-	params->alias_head = add_node(&(params->alias_head), name);
+	params->alias_head = add_node(&(params->alias_head), name, val);
+	free(val);
 	params->status = 0;
-	return;
 }
 
 /**
- * _getenv - get environment variable
+ * print_alias - searches the alias list and prints to the corresponding value
  * @name: variable name
- * @params: parameters
+ * @params: shell state
  *
- * Return: value if found, NULL otherwise
+ * Return: only print
  */
-void get_alias(char *name, param_t *params)
+void print_alias(char *name, param_t *params)
 {
 	unsigned int len = 0;
 	list_t *ptr = params->alias_head;
@@ -101,26 +91,30 @@ void get_alias(char *name, param_t *params)
 		ptr = ptr->next;
 	}
 	params->status = 0;
-	return;
 }
 
 /**
- * _printenv - print environment variables
- * @params: parameters
+ * print_all_aliases - print all aliases
+ * @params: shell state
+ * Return: void print
  */
-void print_all_alias(param_t *params)
+void print_all_aliases(param_t *params)
 {
 	print_list_alias(params->alias_head);
 	params->status = 0;
-	return;
 }
 
+/**
+ * print_list_alias - print an alias formatted
+ * @head: head node of list
+ * Return: void print
+ */
 void print_list_alias(list_t *head)
 {
 	if (head)
 	{
-		print_list_reverse(head->next);
-		if (head->str)
+		print_list_alias(head->next);
+		if (head->str != NULL)
 			_printf("%s=\'%s\'\n", head->str, head->val);
 	}
 }

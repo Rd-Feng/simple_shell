@@ -82,10 +82,15 @@ void _myExit(param_t *params);
 void _cd(param_t *params);
 
 void _alias(param_t * params);
+
 void set_alias(char *name, param_t *params);
-void get_alias(char *name, param_t *params);
-void print_all_alias(param_t *params);
-void print_list_reverse(list_t *);
+
+void print_alias(char *name, param_t *params);
+
+void print_all_aliases(param_t *params);
+
+void print_list_env(list_t *);
+
 void print_list_alias(list_t *);
 
 #endif
