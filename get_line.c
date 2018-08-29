@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include "myShell.h"
 #include "holberton.h"
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 4096
 
 /**
  * _getline - fetches a line of chars from stdin
@@ -13,11 +13,19 @@
 int _getline(param_t *params)
 {
 	static char line[BUFFER_SIZE];
+	char *writeHead = line, *linePtr = line;
 	unsigned int len, i;
 
-	len = read(0, line, BUFFER_SIZE);
-	_strcpy(params->buffer, line);
-	for (i = 0; i < BUFFER_SIZE; i++)
-		line[i] = 0;
-	return (len);
+	do {
+		len = read(0, writeHead, BUFFER_SIZE);
+		if (len == 0)
+			break;
+		writeHead += len;
+	} while (*(writeHead - 1) != '\n');
+
+	for (i = 0; linePtr != writeHead; i++, linePtr++)
+		params->buffer[i] = *linePtr;
+	if (len == 0)
+		return (-1);
+	return (i);
 }
