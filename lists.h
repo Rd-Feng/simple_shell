@@ -32,7 +32,7 @@ list_t *add_node(list_t **head, char *str, char *val);
 
 void free_list(list_t *head);
 
-list_t *get_node(list_t **head, char *str);
+list_t *get_node(list_t *head, char *str);
 
 
 #endif

@@ -20,7 +20,6 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	int cond;
 	unsigned int i;
 	char *state = NULL;
-	char sep[] = {59};
 
 	params = init_param(argv, env);
 	if (!params)
@@ -47,7 +46,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			return (0);
 		}
 		state = NULL;
-		params->nextCommand = _strtok(params->buffer, sep, &state);
+		params->nextCommand = _strtok(params->buffer, ";", &state);
 		while (params->nextCommand)
 		{
 			params->tokCount = process_string(params);
@@ -106,7 +105,8 @@ param_t *init_param(char **argv, char **env)
 	{
 		eqs = _strchr(env[i], '=');
 		*eqs = '\0';
-		params->env_head = add_node(&(params->env_head), env[i], eqs + 1);
+		params->env_head = add_node(&(params->env_head),
+					    env[i], eqs + 1);
 		if (!(params->env_head))
 		{
 			free(params->buffer);
@@ -116,7 +116,6 @@ param_t *init_param(char **argv, char **env)
 			exit(-1);
 		}
 	}
-	params->command_head = NULL;
 	params->alias_head = NULL;
 	return (params);
 }

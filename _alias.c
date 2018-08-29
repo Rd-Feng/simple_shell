@@ -34,48 +34,31 @@ void _alias(param_t *params)
 void set_alias(char *name, param_t *params)
 {
 	char *val, *tmp = NULL;
-	unsigned int i = 0, len;
+	unsigned int i = 0;
 	list_t *h = params->alias_head;
 
 	while (name[i] != '=')
 		i++;
-	if (name[i + 1] == '\'')
+	if (name[i + 1] == '\'' && _strchr(&name[i + 2], '\''))
 	{
-		len = _strlen(name);
-		if (name[len - 1] == '\'')
-		{
-			name[len - 1] = '\0';
-			val = _strdup(&name[i + 2]);
-		}
-		else
-		{
-			val = _strdup(&name[i + 2]);
-			len = _strlen(val);
-			for (i = 2; val[len - 1] != '\''; i++)
-			{
-				tmp = str_concat(val, " ");
-				free(val);
-				val = str_concat(tmp, params->args[i]);
-				len = _strlen(val);
-				free(tmp);
-			}
-			val[len - 1] = '\0';
-		}
+		tmp = _strchr(&name[i + 2], '\'');
+		*tmp = '\0';
+		val = _strdup(&name[i + 2]);
 	}
 	else
 	{
-		val = _strdup(&name[i + 1]);
+		_printf("Usage: alias name='value' [...]\n");
+		return;
 	}
-	name[i - 1] = '\0';
+	name[i] = '\0'; /* set = to terminater */
 
 	while (h)
 	{
-		if (_strcmp_n(name, h->str, i) == 0)
+		if (!_strcmp(name, h->str))
 		{
 			free(h->val);
-			h->val = _strdup(val);
-			h->valLen = i;
-			free(val);
+			h->val = val;
+			h->valLen = _strlen(val);
 			params->status = 0;
 			return;
 		}
