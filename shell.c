@@ -1,4 +1,4 @@
-#include <stdio.h>
+#define _GNU_SOURCE
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
@@ -17,7 +17,8 @@ param_t *init_param(char **argv, char **env);
 int main(int __attribute__((unused)) argc, char **argv, char **env)
 {
 	param_t *params = NULL;
-	int cond, status;
+	size_t size = BUFFER_SIZE;
+	int cond = -2, status;
 	unsigned int i;
 	char *state = NULL;
 
@@ -27,18 +28,23 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	signal(SIGINT, sigint_handler);
 	while (1)
 	{
+		if (params->buffer[_strlen(params->buffer) - 1] != '\n'
+			&& cond != -2)
+		{
+			if (isatty(STDIN_FILENO))
+				_printf("($) \n");
+			exit(params->status);
+		}
 		for (i = 0; i < BUFFER_SIZE; i++)
 			(params->buffer)[i] = 0;
 		params->tokCount = 0;
 		if (isatty(STDIN_FILENO))
 			_printf("($) ");
-		cond = _getline(params);
+		cond = getline(&params->buffer, &size, stdin);
 		params->lineCount++;
-		if (cond == -1 || cond == 0)
+		if (cond == -1)
 		{
 			status = params->status;
-			if (isatty(STDIN_FILENO))
-				_printf("\n");
 			free(params->buffer);
 			for (i = 0; i < params->argsCap; i++)
 				free(params->args[i]);
@@ -47,6 +53,8 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			free_list(params->env_head);
 			free_list(params->alias_head);
 			free(params);
+			if (isatty(STDIN_FILENO))
+				_printf("\n");
 			return (status);
 		}
 		state = NULL;

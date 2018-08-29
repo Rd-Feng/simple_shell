@@ -3,7 +3,6 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include "lists.h"
-#define NOT_FOUND 1
 /**
  * struct param_s - structure used to hold all shell variables needed
  * @argv: command line argument from main function

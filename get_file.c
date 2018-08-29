@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "holberton.h"
 #include "myShell.h"
 #include "lists.h"
@@ -16,10 +17,18 @@ char *get_file(param_t *params)
 	char *exePath = NULL, *exeArg = NULL, *tmp = NULL;
 	char *state = NULL;
 
-	if (access(params->args[0], F_OK) == 0)
+	if (access(params->args[0], F_OK | X_OK) == 0)
 	{
 		free(path);
 		return (_strdup(params->args[0]));
+	}
+	if (errno == EACCES)
+	{
+		params->status = 126;
+		_printf("%s: %d: %s: Permission denied\n",
+                        params->argv[0], params->lineCount,
+                        params->args[0]);
+		return (NULL);
 	}
 	path = _getenv("PATH", params);
 	if (!path)
@@ -42,6 +51,10 @@ char *get_file(param_t *params)
 		free(exePath);
 		exePath = _strtok(path, ":", &state);
 	}
+	params->status = 127;
+	_printf("%s: %d: %s: not found\n",
+		params->argv[0], params->lineCount,
+		params->args[0]);
 	free(path);
 	free(exePath);
 	free(exeArg);
