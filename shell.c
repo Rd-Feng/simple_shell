@@ -32,7 +32,6 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		params->tokCount = 0;
 		_printf("($) ");
 		cond = _getline(params);
-		params->lineCount++;
 		if (cond == -1 || cond == 0)
 		{
 			free(params->buffer);
@@ -51,7 +50,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		{
 			params->tokCount = process_string(params);
 			if (params->tokCount == 0)
-				continue;
+				break;;
 			run_command(params);
 			for (i = 0; i < params->argsCap; i++)
 			{

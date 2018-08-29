@@ -15,6 +15,11 @@ int process_string(param_t *params)
 	list_t *node;
 
 	token = _strtok(params->nextCommand, " \n\t", &state);
+	if (!token)
+	{
+		params->tokCount = 0;
+		return (0);
+	}
 	node = get_node(params->alias_head, token);
 	if (node != NULL)
 	{
