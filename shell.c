@@ -20,7 +20,6 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	int cond;
 	unsigned int i;
 	char *state = NULL;
-	char sep[] = {59};
 
 	params = init_param(argv, env);
 	if (!params)
@@ -47,7 +46,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			return (0);
 		}
 		state = NULL;
-		params->nextCommand = _strtok(params->buffer, sep, &state);
+		params->nextCommand = _strtok(params->buffer, ";", &state);
 		while (params->nextCommand)
 		{
 			params->tokCount = process_string(params);
