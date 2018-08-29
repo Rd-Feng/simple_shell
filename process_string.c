@@ -18,6 +18,8 @@ int process_string(param_t *params)
 	node = get_node(params->alias_head, token);
 	if (node != NULL)
 	{
+		free(token);
+		token = NULL;
 		alias = _strdup(node->val);
 		val = _strtok(alias, " \n\t", &state_2);
 		(params->args)[(params->tokCount)++] = val;
@@ -30,6 +32,8 @@ int process_string(param_t *params)
 	}
 	else
 		(params->args)[(params->tokCount)++] = token;
+	token = _strtok(params->nextCommand, " \n\t", &state);
+	params->args[params->tokCount++] = token;
 	while (token)
 	{
 		token = _strtok(params->nextCommand, " \n\t", &state);
