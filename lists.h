@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #ifndef LISTSH
 #define LISTSH
 #include <unistd.h>

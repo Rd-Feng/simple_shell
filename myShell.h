@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #ifndef MY_SHELL_H
 #define MY_SHELL_H
 #include <stdio.h>
