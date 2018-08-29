@@ -30,10 +30,13 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		for (i = 0; i < BUFFER_SIZE; i++)
 			(params->buffer)[i] = 0;
 		params->tokCount = 0;
-		_printf("($) ");
+		if (isatty(STDIN_FILENO))
+			_printf("($) ");
 		cond = _getline(params);
 		if (cond == -1 || cond == 0)
 		{
+			if (isatty(STDIN_FILENO))
+				_printf("\n");
 			free(params->buffer);
 			for (i = 0; i < params->argsCap; i++)
 				free(params->args[i]);
