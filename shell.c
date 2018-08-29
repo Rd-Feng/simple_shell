@@ -35,7 +35,17 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		cond = _getline(params);
 		params->lineCount++;
 		if (cond == -1 || cond == 0)
+		{
+			free(params->buffer);
+			for (i = 0; i < params->argsCap; i++)
+				free(params->args[i]);
+			free(params->args);
+			free(params->nextCommand);
+			free_list(params->env_head);
+			free_list(params->alias_head);
+			free(params);
 			return (0);
+		}
 		state = NULL;
 		params->nextCommand = _strtok(params->buffer, sep, &state);
 		while (params->nextCommand)
