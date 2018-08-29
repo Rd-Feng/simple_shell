@@ -22,6 +22,8 @@ char *get_file(param_t *params)
 		return (_strdup(params->args[0]));
 	}
 	path = _getenv("PATH", params);
+	if (!path)
+		return (NULL);
 	exePath = _strtok(path, ":", &state);
 	while (exePath)
 	{

@@ -15,9 +15,8 @@ char *_getenv(char *name, param_t *params)
 
 	while (ptr)
 	{
-		if (_strlen(name) == _strlen(ptr->str))
-			if (!_strcmp(name, ptr->str))
-				return (_strdup(ptr->val));
+		if (!_strcmp(name, ptr->str))
+			return (_strdup(ptr->val));
 		ptr = ptr->next;
 	}
 	return (NULL);
