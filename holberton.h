@@ -1,7 +1,6 @@
-#define _GNU_SOURCE
 #ifndef _HOLBERTON_H_
 #define _HOLBERTON_H_
-
+#define _GNU_SOURCE
 #define NULL_PTR -1
 #define WRONG_SPECIFIER -2
 

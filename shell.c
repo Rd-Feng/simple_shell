@@ -53,7 +53,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		{
 			params->tokCount = process_string(params);
 			if (params->tokCount == 0)
-				break;;
+				break;
 			run_command(params);
 			for (i = 0; i < params->argsCap; i++)
 			{
