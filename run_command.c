@@ -24,10 +24,6 @@ void run_command(param_t *params)
 	exeFile = get_file(params);
 	if (!exeFile)
 	{
-		params->status = NOT_FOUND;
-		_printf("%s: %d: %s: not found\n",
-			params->argv[0], params->lineCount,
-			params->args[0]);
 		return;
 	}
 	pid = fork();

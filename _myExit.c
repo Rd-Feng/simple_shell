@@ -46,7 +46,9 @@ void _myExit(param_t *params)
 		if (status == -1)
 		{
 			_printf("%s: %d: exit: Illegal number: %s\n",
-				params->argv[0], params->lineCount, params->args[1]);
+				params->argv[0], params->lineCount,
+				params->args[1]);
+			params->status = 2;
 			return;
 		}
 		free(params->buffer);

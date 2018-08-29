@@ -17,6 +17,7 @@ void _setenv(param_t *params)
 
 	if (params->tokCount != 3)
 	{
+		params->status = 2;
 		write(STDERR_FILENO,
 		      "Usage: setenv VARIABLE VALUE\n", 29);
 		return;
@@ -50,6 +51,7 @@ void _unsetenv(param_t *params)
 
 	if (params->tokCount != 2)
 	{
+		params->status = 2;
 		write(STDERR_FILENO,
 		      "Usage: unsetenv VARIABLE\n", 25);
 		return;
@@ -65,6 +67,7 @@ void _unsetenv(param_t *params)
 			free(h->str);
 			free(h->val);
 			free(h);
+			params->status = 0;
 			return;
 		}
 		prev = h;
