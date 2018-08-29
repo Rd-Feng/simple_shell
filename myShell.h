@@ -93,4 +93,6 @@ void print_list_env(list_t *);
 
 void print_list_alias(list_t *);
 
+void free_params(param_t *params);
+
 #endif

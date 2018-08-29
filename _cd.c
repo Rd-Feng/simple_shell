@@ -34,6 +34,11 @@ void _cd(param_t *params)
 	}
 	else
 		target = _strdup(params->args[1]);
+		if (!target)
+		{
+			write(STDERR_FILENO, "cd target malloc error\n", 18);
+			exit(-1);
+		}
 	i = chdir(target);
 	if (i)
 	{
@@ -52,6 +57,11 @@ void _cd(param_t *params)
 	/* set OLDPWD to the current PWD */
 	tmpArgs[0] = _strdup("setenv");
 	tmpArgs[1] = _strdup("OLDPWD");
+	if (!tmpArgs[0] || !tmpArgs[1])
+	{
+		write(STDERR_FILENO, "cd old PWD malloc error\n", 18);
+		exit(-1);
+	}
 	tmpArgs[2] = _getenv("PWD", params);
 	_setenv(params);
 	for (i = 0; i < 3; i++)
@@ -60,6 +70,11 @@ void _cd(param_t *params)
 	tmpArgs[0] = _strdup("setenv");
 	tmpArgs[1] = _strdup("PWD");
 	tmpArgs[2] = _strdup(getcwd(cwd, 1024));
+	if (!tmpArgs[0] || !tmpArgs[1] || !tmpArgs[2])
+	{
+		write(STDERR_FILENO, "cd new PWD malloc error\n", 18);
+		exit(-1);
+	}
 	_setenv(params);
 	for (i = 0; i < 3; i++)
 		free(tmpArgs[i]);
