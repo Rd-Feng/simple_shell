@@ -70,7 +70,7 @@ void _unsetenv(param_t *params)
 		prev = h;
 		h = h->next;
 	}
-	write(STDERR_FILENO, "Environment variable not found: ", 23);
+	write(STDERR_FILENO, "Environment variable not found: ", 32);
 	write(STDERR_FILENO, params->args[1], _strlen(params->args[1]));
 	write(STDERR_FILENO, "\n", 1);
 		
