@@ -29,6 +29,7 @@ void _myExit(param_t *params)
 
 	if (!params->args[1])
 	{
+		status = params->status;
 		free(params->buffer);
 		for (i = 0; i < params->argsCap; i++)
 			free(params->args[i]);
@@ -37,7 +38,7 @@ void _myExit(param_t *params)
 		free_list(params->env_head);
 		free_list(params->alias_head);
 		free(params);
-		exit(0);
+		exit(status);
 	}
 	if (validNum(params->args[1]))
 	{

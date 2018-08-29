@@ -17,7 +17,7 @@ param_t *init_param(char **argv, char **env);
 int main(int __attribute__((unused)) argc, char **argv, char **env)
 {
 	param_t *params = NULL;
-	int cond;
+	int cond, status;
 	unsigned int i;
 	char *state = NULL;
 
@@ -33,8 +33,10 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		if (isatty(STDIN_FILENO))
 			_printf("($) ");
 		cond = _getline(params);
+		params->lineCount++;
 		if (cond == -1 || cond == 0)
 		{
+			status = params->status;
 			if (isatty(STDIN_FILENO))
 				_printf("\n");
 			free(params->buffer);
@@ -45,7 +47,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			free_list(params->env_head);
 			free_list(params->alias_head);
 			free(params);
-			return (0);
+			return (status);
 		}
 		state = NULL;
 		params->nextCommand = _strtok(params->buffer, ";", &state);

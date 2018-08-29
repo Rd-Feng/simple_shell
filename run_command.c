@@ -15,7 +15,6 @@ void run_command(param_t *params)
 	pid_t pid;
 	void (*buildin)(param_t *);
 
-	params->status = 0;
 	buildin = get_buildin(params);
 	if (buildin)
 	{
@@ -40,7 +39,8 @@ void run_command(param_t *params)
 	}
 	else
 	{
-		wait(NULL);
+		wait(&params->status);
+		params->status = WEXITSTATUS(params->status);
 		free(exeFile);
 	}
 }
