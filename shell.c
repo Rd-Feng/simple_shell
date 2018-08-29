@@ -106,7 +106,8 @@ param_t *init_param(char **argv, char **env)
 	{
 		eqs = _strchr(env[i], '=');
 		*eqs = '\0';
-		params->env_head = add_node(&(params->env_head), env[i], eqs + 1);
+		params->env_head = add_node(&(params->env_head),
+					    env[i], eqs + 1);
 		if (!(params->env_head))
 		{
 			free(params->buffer);
@@ -116,7 +117,6 @@ param_t *init_param(char **argv, char **env)
 			exit(-1);
 		}
 	}
-	params->command_head = NULL;
 	params->alias_head = NULL;
 	return (params);
 }

@@ -15,7 +15,6 @@
  * @status: run command return status
  * @env_head: singly linked list of environment vars
  * @alias_head: singly linked list of aliases
- * @command_head: singly linked list of commands
  * Description: This structures hold all variables that passed into
  * other functions.
  */
@@ -30,7 +29,6 @@ typedef struct param_s
 	unsigned int tokCount;
 	int status;
 	list_t *env_head;
-	list_t *command_head;
 	list_t *alias_head;
 } param_t;
 

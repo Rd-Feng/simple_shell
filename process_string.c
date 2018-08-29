@@ -15,7 +15,7 @@ int process_string(param_t *params)
 	list_t *node;
 
 	token = _strtok(params->nextCommand, " \n\t", &state);
-	node = get_node(&params->alias_head, token);
+	node = get_node(params->alias_head, token);
 	if (node != NULL)
 	{
 		alias = _strdup(node->val);
