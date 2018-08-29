@@ -56,7 +56,7 @@ list_t *add_node(list_t **head, char *str, char *val)
 	new->str = _strdup(str);
 	new->len = _strlen(new->str);
 	new->val = _strdup(val);
-	new->val_len = _strlen(val);
+	new->valLen = _strlen(val);
 	new->next = *head;
 	*head = new;
 
@@ -78,50 +78,14 @@ list_t *get_node(list_t **head, char *str)
 		return (NULL);
 	h = *head;
 	i = _strlen(str);
-	while(h)
+	while (h)
 	{
 		j = _strlen(h->str);
 		if (i == j && _strcmp(str, h->str) == 0)
 			return (h);
-		else
-			h = h->next;
-	}
-	return (NULL);
-}
-/**
- * add_node_end - adds a new node at the end of a list_t list.
- * @head: start of list
- * @str: key
- * @val: value
- * Return: ptr to new head
- */
-list_t *add_node_end(list_t **head, char *str, char *val)
-{
-	list_t *new;
-	list_t *h;
-
-	if (!head)
-		return (NULL);
-	h = *head;
-	new = malloc(sizeof(list_t));
-	if (!new)
-		return (NULL);
-	new->str = _strdup(str);
-	new->len = _strlen(str);
-	new->val = _strdup(val);
-	new->val_len = _strlen(val);
-	new->next = NULL;
-	if (*head == NULL)
-	{
-		*head = new;
-		return (*head);
-	}
-	while (h->next)
-	{
 		h = h->next;
 	}
-	h->next = new;
-	return (*head);
+	return (NULL);
 }
 
 /**

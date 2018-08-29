@@ -33,23 +33,40 @@ void _alias(param_t *params)
 */
 void set_alias(char *name, param_t *params)
 {
-	char *val;
+	char *val, *tmp = NULL;
 	unsigned int i = 0, len;
 	list_t *h = params->alias_head;
 
 	while (name[i] != '=')
 		i++;
-	len = _strlen(name);
-	if (name[i + 1] == '\'' && name[len - 1] == '\'')
+	if (name[i + 1] == '\'')
 	{
-		name[len - 1] = '\0';
-		val = _strdup(&name[i + 2]);
+		len = _strlen(name);
+		if (name[len - 1] == '\'')
+		{
+			name[len - 1] = '\0';
+			val = _strdup(&name[i + 2]);
+		}
+		else
+		{
+			val = _strdup(&name[i + 2]);
+			len = _strlen(val);
+			for (i = 2; val[len - 1] != '\''; i++)
+			{
+				tmp = str_concat(val, " ");
+				free(val);
+				val = str_concat(tmp, params->args[i]);
+				len = _strlen(val);
+				free(tmp);
+			}
+			val[len - 1] = '\0';
+		}
 	}
 	else
 	{
 		val = _strdup(&name[i + 1]);
 	}
-	name[i] = '\0';
+	name[i - 1] = '\0';
 
 	while (h)
 	{
@@ -57,7 +74,7 @@ void set_alias(char *name, param_t *params)
 		{
 			free(h->val);
 			h->val = _strdup(val);
-			h->val_len = i;
+			h->valLen = i;
 			free(val);
 			params->status = 0;
 			return;
