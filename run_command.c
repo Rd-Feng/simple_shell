@@ -28,7 +28,10 @@ void run_command(param_t *params)
 	}
 	pid = fork();
 	if (pid < 0)
+	{
+		free_params(params);
 		exit(98);
+	}
 	else if (pid == 0)
 	{
 		execve(exeFile, params->args, NULL);

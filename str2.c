@@ -80,10 +80,11 @@ int _strcmp_n(char *s1, char *s2, int n)
  */
 int _atoi(char *s)
 {
-	int i, n;
+	int i, n, tmp;
 
 	i = 0;
 	n = 0;
+	tmp = 0;
 
 	while (s[i] != '\0')
 	{
@@ -91,7 +92,10 @@ int _atoi(char *s)
 			return (-1);
 		if (s[i] >= '0' && s[i] <= '9')
 		{
+			tmp = n;
 			n = n * 10 + (s[i] - '0');
+			if (n < tmp)
+				return (-1);
 			if (s[i + 1] < '0' || s[i + 1] > '9')
 				break;
 		}

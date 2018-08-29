@@ -25,19 +25,11 @@ int validNum(char *s)
 void _myExit(param_t *params)
 {
 	int status = 0;
-	unsigned int i;
 
 	if (!params->args[1])
 	{
 		status = params->status;
-		free(params->buffer);
-		for (i = 0; i < params->argsCap; i++)
-			free(params->args[i]);
-		free(params->args);
-		free(params->nextCommand);
-		free_list(params->env_head);
-		free_list(params->alias_head);
-		free(params);
+		free_params(params);
 		exit(status);
 	}
 	if (validNum(params->args[1]))
@@ -51,13 +43,7 @@ void _myExit(param_t *params)
 			params->status = 2;
 			return;
 		}
-		free(params->buffer);
-		for (i = 0; i < params->argsCap; i++)
-			free(params->args[i]);
-		free(params->args);
-		free_list(params->env_head);
-		free_list(params->alias_head);
-		free(params);
+		free_params(params);
 		exit(status);
 	}
 	else

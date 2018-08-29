@@ -60,6 +60,7 @@ void _cd(param_t *params)
 	if (!tmpArgs[0] || !tmpArgs[1])
 	{
 		write(STDERR_FILENO, "cd old PWD malloc error\n", 18);
+		free_params(params);
 		exit(-1);
 	}
 	tmpArgs[2] = _getenv("PWD", params);
@@ -73,6 +74,7 @@ void _cd(param_t *params)
 	if (!tmpArgs[0] || !tmpArgs[1] || !tmpArgs[2])
 	{
 		write(STDERR_FILENO, "cd new PWD malloc error\n", 18);
+		free_params(params);
 		exit(-1);
 	}
 	_setenv(params);

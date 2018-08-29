@@ -33,7 +33,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		{
 			if (isatty(STDIN_FILENO))
 				_printf("($) \n");
-			/*free_params(params);*/
+			free_params(params);
 			exit(params->status);
 		}
 		for (i = 0; i < BUFFER_SIZE; i++)
@@ -46,14 +46,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		if (cond == -1)
 		{
 			status = params->status;
-			free(params->buffer);
-			for (i = 0; i < params->argsCap; i++)
-				free(params->args[i]);
-			free(params->args);
-			free(params->nextCommand);
-			free_list(params->env_head);
-			free_list(params->alias_head);
-			free(params);
+			free_params(params);
 			if (isatty(STDIN_FILENO))
 				_printf("\n");
 			return (status);
@@ -133,28 +126,4 @@ param_t *init_param(char **argv, char **env)
 	}
 	params->alias_head = NULL;
 	return (params);
-}
-
-/**
- * free_params - frees our state object from memory
- * @params: - param structure to free
- */
-
-void free_params(param_t *params)
-{
-	unsigned int i;
-
-	if (params->buffer)
-		free(params->buffer);
-	if (params->nextCommand)
-		free(params->nextCommand);
-
-	free_list(params->env_head);
-	free_list(params->alias_head);
-
-	if (params->args)
-		for (i = 0; params->args[i]; i++)
-			free(params->args[i]);
-
-	free(params);
 }
