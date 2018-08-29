@@ -1,0 +1,46 @@
+.TH _PRINTF 3 "AUGUST 29 2018" "0.01" "simple shell man page"
+.SH NAME
+.B HSH
+\- Simple Shell built by A. Farioletti and R. Feng, students at Holberton School
+
+.SH SYNOPSIS
+    hsh [command_string]
+
+.SH DESCRIPTION
+HSH is a command line interpreter that accepts commands from standard input or from a file, parses the cammand and gives them to the operating system for execution
+
+.SH SHELL GRAMMAR
+.IP
+.P
+.TP
+.B Simple Commands
+A simple command is a string containing a sequence of the command, followed by arguments, separated by blank space characters and terminated with an EOF. The first word specifies the command to be executed, and is passed as an argment zero. 
+
+.SH BUILT-INS & COMMANDS
+.PP
+.B env
+- prints the environmental variables to the standard output
+.PP
+.B setenv VARIABLE VALUE
+- set a specific environmental variable to a specified value
+.PP
+.B unsetenv VARIABLE
+- removes a specific environmental variable
+.PP
+.B alias [name[='value'] ...] - If supplied without arguments, alias will print the names and values of all currently defined aliases, one per line. When the arguments are formatted name=string, the shell defines an alias name with the specified value string. If arguments have only name is specified, the value of the alias name is printed.  
+.PP
+.B echo [arg ...]
+- Argments separated by spaces, followed by a newline, are printed on the standard output
+.B exit [n]
+- The exit builting will quit the shell with a status of n. Without n, the exit status is that the last command executed.
+
+.SH QUITING
+You can quit the shell program by entering the exit command or pressing the CTRL + D buttons on your keyboard.
+
+.SH EXAMPLES
+
+.SH BUGS
+No known bugs.
+
+.SH AUTHOR
+Rui Feng and Alex Farioletti
