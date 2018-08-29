@@ -26,6 +26,11 @@ int process_string(param_t *params)
 		free(token);
 		token = NULL;
 		alias = _strdup(node->val);
+		if (!alias)
+		{
+			write(STDERR_FILENO, "alias expansion malloc error\n", 18);
+			exit(-1);
+		}
 		val = _strtok(alias, " \n\t", &state_2);
 		(params->args)[(params->tokCount)++] = val;
 		while (val)
@@ -51,7 +56,7 @@ int process_string(param_t *params)
 						params->argsCap);
 			if (!(params->args))
 			{
-				write(1, "realloc error\n", 14);
+				write(STDERR_FILENO, "realloc error\n", 14);
 				exit(-1);
 			}
 		}
