@@ -49,15 +49,12 @@ size_t print_list(list_t *h)
 list_t *add_node(list_t **head, char *str, char *val)
 {
 	list_t *new;
-	size_t i = 0;
 
 	new = malloc(sizeof(list_t));
 	if (new == NULL)
 		return (NULL);
 	new->str = _strdup(str);
-	while (str[i])
-		i++;
-	new->len = i;
+	new->len = _strlen(new->str);
 	new->val = _strdup(val);
 	new->val_len = _strlen(val);
 	new->next = *head;
