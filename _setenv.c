@@ -29,8 +29,6 @@ void _setenv(param_t *params)
 			free(tmp);
 			h->val = _strdup(value);
 			h->valLen = _strlen(value);
-			_printf("Environment variable %s set to: %s\n",
-				params->args[1], params->args[2]);
 			params->status = 0;
 			return;
 		}
@@ -72,6 +70,9 @@ void _unsetenv(param_t *params)
 		prev = h;
 		h = h->next;
 	}
-	_printf("Environment not found: %s\n", params->args[1]);
+	write(STDERR_FILENO, "Environment variable not found: ", 23);
+	write(STDERR_FILENO, params->args[1], _strlen(params->args[1]));
+	write(STDERR_FILENO, "\n", 1);
+		
 	params->status = 0;
 }
