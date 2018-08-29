@@ -28,11 +28,12 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	signal(SIGINT, sigint_handler);
 	while (1)
 	{
-		if (params->buffer[_strlen(params->buffer) - 1] != '\n'
-			&& cond != -2)
+		if (cond != -2 &&
+		    params->buffer[_strlen(params->buffer) - 1] != '\n')
 		{
 			if (isatty(STDIN_FILENO))
 				_printf("($) \n");
+			/*free_params(params);*/
 			exit(params->status);
 		}
 		for (i = 0; i < BUFFER_SIZE; i++)
@@ -103,6 +104,8 @@ param_t *init_param(char **argv, char **env)
 		free(params);
 		exit(-1);
 	}
+	for (i = 0; i < BUFFER_SIZE; i++)
+		params->buffer[i] = 0;
 	params->args = malloc(sizeof(char *) * params->argsCap);
 	if (!(params->args))
 	{

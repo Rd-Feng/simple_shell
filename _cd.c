@@ -13,9 +13,25 @@ void _cd(param_t *params)
 	int i;
 
 	if (params->tokCount == 1)
+	{
 		target = _getenv("HOME", params);
-	else if (!_strcmp(params->args[1], "-"))
-		target = _getenv("OLDPWD", params);
+	}
+	else if (params->args[1][0] == '-')
+	{
+		if (!_strcmp(params->args[1], "-"))
+		{
+			target = _getenv("OLDPWD", params);
+			_printf("%s\n", target);
+		}
+		else
+		{
+			params->status = 2;
+			_printf("%s: %d: cd: Illegal option %c%c\n",
+				params->argv[0], params->lineCount,
+				'-', params->args[1][1]);
+			return;
+		}
+	}
 	else
 		target = _strdup(params->args[1]);
 	i = chdir(target);
