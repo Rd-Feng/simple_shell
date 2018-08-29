@@ -10,7 +10,8 @@
  */
 int process_string(param_t *params)
 {
-	char *token = NULL, *state = NULL, *alias = NULL, *val;
+	char *token = NULL, *state = NULL;
+	char *alias = NULL, *state_2 = NULL, *val;
 	list_t *node;
 
 	token = _strtok(params->nextCommand, " \n\t", &state);
@@ -18,13 +19,14 @@ int process_string(param_t *params)
 	if (node != NULL)
 	{
 		alias = _strdup(node->val);
-		val = _strtok(alias, " ", &state);
+		val = _strtok(alias, " ", &state_2);
 		(params->args)[(params->tokCount)++] = val;
 		while (val)
 		{
-			val = _strtok(alias, " ", &state);
+			val = _strtok(alias, " ", &state_2);
 			(params->args)[(params->tokCount)++] = val;
 		}
+		free(alias);
 	}
 	else
 		(params->args)[(params->tokCount)++] = token;

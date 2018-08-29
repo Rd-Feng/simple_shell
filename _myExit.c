@@ -35,6 +35,7 @@ void _myExit(param_t *params)
 		free(params->args);
 		free(params->nextCommand);
 		free_list(params->env_head);
+		free_list(params->alias_head);
 		free(params);
 		exit(0);
 	}
@@ -52,6 +53,7 @@ void _myExit(param_t *params)
 			free(params->args[i]);
 		free(params->args);
 		free_list(params->env_head);
+		free_list(params->alias_head);
 		free(params);
 		exit(status);
 	}
