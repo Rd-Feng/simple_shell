@@ -42,22 +42,21 @@ size_t print_list(list_t *h)
 /**
  * add_node - adds a new node at the beginning of a list_t list.
  * @head: start of list
- * @str: to add
- *
+ * @str: key
+ * @val: value
  * Return: ptr to new head
  */
-list_t *add_node(list_t **head, char *str)
+list_t *add_node(list_t **head, char *str, char *val)
 {
 	list_t *new;
-	size_t i = 0;
 
 	new = malloc(sizeof(list_t));
 	if (new == NULL)
 		return (NULL);
 	new->str = _strdup(str);
-	while (str[i])
-		i++;
-	new->len = i;
+	new->len = _strlen(new->str);
+	new->val = _strdup(val);
+	new->valLen = _strlen(val);
 	new->next = *head;
 	*head = new;
 
@@ -65,37 +64,25 @@ list_t *add_node(list_t **head, char *str)
 }
 
 /**
- * add_node_end - adds a new node at the end of a list_t list.
+ * get_node - search for a node
  * @head: start of list
- * @str: to add
- *
- * Return: ptr to new head
+ * @str: key
+ * Return: ptr to desired node, NULL if not found
  */
-list_t *add_node_end(list_t **head, char *str)
+list_t *get_node(list_t *head, char *str)
 {
-	list_t *new;
 	list_t *h;
 
 	if (!head)
 		return (NULL);
-	h = *head;
-	new = malloc(sizeof(list_t));
-	if (!new)
-		return (NULL);
-	new->str = _strdup(str);
-	new->len = _strlen(str);
-	new->next = NULL;
-	if (*head == NULL)
+	h = head;
+	while (h)
 	{
-		*head = new;
-		return (*head);
-	}
-	while (h->next)
-	{
+		if (!_strcmp(h->str, str))
+			break;
 		h = h->next;
 	}
-	h->next = new;
-	return (*head);
+	return (h);
 }
 
 /**
@@ -110,6 +97,7 @@ void free_list(list_t *head)
 	{
 		ptr = head->next;
 		free(head->str);
+		free(head->val);
 		free(head);
 		head = ptr;
 	}

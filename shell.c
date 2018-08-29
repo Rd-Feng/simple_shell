@@ -20,7 +20,6 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	int cond;
 	unsigned int i;
 	char *state = NULL;
-	char sep[] = {59};
 
 	params = init_param(argv, env);
 	if (!params)
@@ -35,9 +34,19 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		cond = _getline(params);
 		params->lineCount++;
 		if (cond == -1 || cond == 0)
+		{
+			free(params->buffer);
+			for (i = 0; i < params->argsCap; i++)
+				free(params->args[i]);
+			free(params->args);
+			free(params->nextCommand);
+			free_list(params->env_head);
+			free_list(params->alias_head);
+			free(params);
 			return (0);
+		}
 		state = NULL;
-		params->nextCommand = _strtok(params->buffer, sep, &state);
+		params->nextCommand = _strtok(params->buffer, ";", &state);
 		while (params->nextCommand)
 		{
 			params->tokCount = process_string(params);
@@ -65,6 +74,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 param_t *init_param(char **argv, char **env)
 {
 	unsigned int i;
+	char *eqs = NULL;
 	param_t *params = malloc(sizeof(*params));
 
 	if (!params)
@@ -93,7 +103,10 @@ param_t *init_param(char **argv, char **env)
 	params->env_head = NULL;
 	for (i = 0; env[i]; i++)
 	{
-		params->env_head = add_node(&(params->env_head), env[i]);
+		eqs = _strchr(env[i], '=');
+		*eqs = '\0';
+		params->env_head = add_node(&(params->env_head),
+					    env[i], eqs + 1);
 		if (!(params->env_head))
 		{
 			free(params->buffer);
@@ -103,6 +116,6 @@ param_t *init_param(char **argv, char **env)
 			exit(-1);
 		}
 	}
-	params->command_head = NULL;
+	params->alias_head = NULL;
 	return (params);
 }

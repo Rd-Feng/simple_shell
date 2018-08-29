@@ -11,7 +11,7 @@
 */
 void _setenv(param_t *params)
 {
-	char *eqs = NULL, *tmp = NULL;
+	char *tmp = NULL;
 	char *name = params->args[1], *value = params->args[2];
 	list_t *h = params->env_head;
 
@@ -21,28 +21,23 @@ void _setenv(param_t *params)
 		      "Usage: setenv VARIABLE VALUE\n", 29);
 		return;
 	}
-	name = str_concat(name, "=");
 	while (h)
 	{
 		if (_strcmp(name, h->str) == 0) /* env var exists */
 		{
-			tmp = h->str;
-			eqs = _strchr(h->str, '=');
-			*(eqs + 1) = '\0';
+			tmp = h->val;
 			free(tmp);
-			h->str = str_concat(name, value);
-			free(name);
+			h->val = _strdup(value);
+			h->valLen = _strlen(value);
+			_printf("Environment variable %s set to: %s\n",
+				params->args[1], params->args[2]);
 			params->status = 0;
 			return;
 		}
 		h = h->next;
 	}
 	/* env var DNE */
-	tmp = name;
-	name = str_concat(name, value);
-	free(tmp);
-	params->env_head = add_node(&(params->env_head), name);
-	free(name);
+	params->env_head = add_node(&(params->env_head), name, value);
 	params->status = 0;
 }
 
@@ -73,6 +68,7 @@ void _unsetenv(param_t *params)
 			else if (prev)
 				prev->next = h->next;
 			free(h->str);
+			free(h->val);
 			free(h);
 			free(name);
 			_printf("Environment variable unset: %s\n",	params->args[1]);
