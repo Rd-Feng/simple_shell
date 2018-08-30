@@ -30,9 +30,8 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		if (cond == -1)
 		{
 			status = params->status;
+			_printf("($) \n");
 			free_params(params);
-			if (isatty(STDIN_FILENO))
-				_printf("($) \n");
 			return (status);
 		}
 		for (i = 0; i < BUFFER_SIZE; i++)
@@ -42,6 +41,12 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			_printf("($) ");
 		cond = _getline(params);
 		params->lineCount++;
+		if (cond == -1 && _strlen(params->buffer) == 0)
+		{
+			status = params->status;
+			free_params(params);
+			return (status);
+		}
 		state = NULL;
 		params->nextCommand = _strtok(params->buffer, ";", &state);
 		while (params->nextCommand)

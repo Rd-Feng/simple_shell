@@ -80,27 +80,21 @@ int _strcmp_n(char *s1, char *s2, int n)
  */
 int _atoi(char *s)
 {
-	int i, n, tmp;
+	int n, tmp, len, mul = 1;
 
-	i = 0;
 	n = 0;
 	tmp = 0;
 
-	while (s[i] != '\0')
+	len = _strlen(s);
+	len--;
+	while (len >= 0)
 	{
-		if (n > INT_MAX)
+		tmp = n;
+		n = n + (s[len] - '0') * mul;
+		if (n < tmp || n > INT_MAX)
 			return (-1);
-		if (s[i] >= '0' && s[i] <= '9')
-		{
-			tmp = n;
-			n = n * 10 + (s[i] - '0');
-			if (n < tmp)
-				return (-1);
-			if (s[i + 1] < '0' || s[i + 1] > '9')
-				break;
-		}
-		i++;
-
+		len--;
+		mul *= 10;
 	}
 	return (n);
 }
