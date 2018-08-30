@@ -57,8 +57,10 @@ void _cd(param_t *params)
 	i = chdir(target);
 	if (i)
 	{
-		_printf("%s: %d: cd: can't cd to %s\n",
-			params->argv[0], params->lineCount, target);
+		write_error(params, "can't cd to ");
+		write(STDERR_FILENO, target, _strlen(target));
+		write(STDERR_FILENO, "\n", 1);
+		params->status = 0;
 		free(target);
 		return;
 	}
