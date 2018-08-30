@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include "myShell.h"
+#include "shell.h"
 #include "lists.h"
 #include "holberton.h"
 /**

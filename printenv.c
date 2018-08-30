@@ -1,6 +1,6 @@
 #include "holberton.h"
 #include "lists.h"
-#include "myShell.h"
+#include "shell.h"
 
 /**
  * _printenv - print environment variables

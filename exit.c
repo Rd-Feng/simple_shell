@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <limits.h>
-#include "myShell.h"
+#include "shell.h"
 #include "holberton.h"
 /**
  * validNum - check if string is a valid number

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "holberton.h"
-#include "myShell.h"
+#include "shell.h"
 #include "lists.h"
 /**
  * get_file - get correct path to a command file

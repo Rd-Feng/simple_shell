@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <limits.h>
-#include "myShell.h"
+#include "shell.h"
 #include "holberton.h"
 /**
  * _strcpy - copies a string to anther memory adress

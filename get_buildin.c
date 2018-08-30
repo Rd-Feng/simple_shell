@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "myShell.h"
+#include "shell.h"
 #include "lists.h"
 #include "holberton.h"
 /**

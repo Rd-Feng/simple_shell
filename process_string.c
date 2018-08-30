@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <unistd.h>
-#include "myShell.h"
+#include "shell.h"
 #include <stdio.h>
 /**
  * process_string - process the next command into string tokens

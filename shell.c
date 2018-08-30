@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
-#include "myShell.h"
+#include "shell.h"
 #include "holberton.h" /* for _printf */
 #define BUFFER_SIZE 4096
 param_t *init_param(char **argv, char **env);

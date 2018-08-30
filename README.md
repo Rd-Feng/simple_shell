@@ -57,6 +57,40 @@ Alex Fariioletti https://github.com/thrownblown
 | str2.c | ... |
 | strtok.c | ... |
 
+alias.c
+AUTHORS
+cd.c
+exit.c
+free_params.c
+get_arg.c
+get_buildin.c
+get_env.c
+get_file.c
+get_line.c
+get_sp2.c
+get_sp.c
+holberton.h
+hsh
+linkedlist.c
+lists.h
+man_1_simple_shell
+shell.h
+printenv.c
+printf.c
+process_string.c
+README.md
+realloc.c
+run_command.c
+scr
+setenv.c
+shell.c
+shell.h
+signal_handler.c
+str2.c
+str.c
+strtok.c
+
+
 
 ## Function Descriptions
 
