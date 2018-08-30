@@ -73,7 +73,7 @@ void _unsetenv(param_t *params);
 
 char *get_file(param_t *params);
 
-void (*get_buildin(param_t *params))(param_t *);
+void (*get_builtin(param_t *params))(param_t *);
 
 void _myExit(param_t *params);
 

@@ -18,7 +18,8 @@ At the end of this project, we are expected to be able to explain to anyone, wit
 * What is EOF / "end-of-file"?
 
 ## Contributors
-Ray Feng https://github.com/Rd-Feng
+Rui Feng https://github.com/Rd-Feng
+
 Alex Fariioletti https://github.com/thrownblown
 
 ## Project Requirements
@@ -31,66 +32,37 @@ Alex Fariioletti https://github.com/thrownblown
 
 | File | Description |
 | ---- | ----------- |
-| README.md | You are soaking in it |
-| myshell.h | ... |
-| myShell.h | ... |
-| holberton.h | ... |
-| lists.h | ... |
-| 100-realloc.c | ... |
-| _myExit.c | ... |
-| _printenv.c | ... |
-| _printf.c | ... |
-| _setenv.c | ... |
+| AUTHORS | Details contributors |
+| README.md | You're reading it |
+| man_1_simple_shell | manual page |
+| scr | ... |
+| shell.h | shell header |
+| lists.h | linked list utilities header |
+| holberton.h | printf and string utilities |
+| alias.c | handles alias builtin for setting and displaying aliases |
+| cd.c | handles cd builtin for changing directories |
+| exit.c | ... |
+| free_params.c | ... |
 | get_arg.c | ... |
-| get_buildin.c | ... |
+| get_builtin.c | ... |
 | get_env.c | ... |
 | get_file.c | ... |
 | get_line.c | ... |
+| get_sp2.c | ... |
 | get_sp.c | ... |
-| get_sp2.c |  ... |
 | linkedlist.c | ... |
+| printenv.c | ... |
+| printf.c | ... |
 | process_string.c | ... |
+| realloc.c | ... |
 | run_command.c | ... |
+| setenv.c | ... |
 | shell.c | ... |
+| shell.h | ... |
 | signal_handler.c | ... |
-| str.c | ... |
 | str2.c | ... |
+| str.c | ... |
 | strtok.c | ... |
-
-alias.c
-AUTHORS
-cd.c
-exit.c
-free_params.c
-get_arg.c
-get_buildin.c
-get_env.c
-get_file.c
-get_line.c
-get_sp2.c
-get_sp.c
-holberton.h
-hsh
-linkedlist.c
-lists.h
-man_1_simple_shell
-shell.h
-printenv.c
-printf.c
-process_string.c
-README.md
-realloc.c
-run_command.c
-scr
-setenv.c
-shell.c
-shell.h
-signal_handler.c
-str2.c
-str.c
-strtok.c
-
-
 
 ## Function Descriptions
 
@@ -129,5 +101,5 @@ strtok.c
 | _atoi | desc | args | retval | eaxmple |
 | _getenv | desc | args | retval | eaxmple |
 | get_file | desc | args | retval | eaxmple |
-| get_buildin | desc | args | retval | eaxmple |
+| get_builtin | desc | args | retval | eaxmple |
 | _myExit | desc | args | retval | eaxmple |

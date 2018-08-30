@@ -15,7 +15,7 @@ void run_command(param_t *params)
 	pid_t pid;
 	void (*buildin)(param_t *);
 
-	buildin = get_buildin(params);
+	buildin = get_builtin(params);
 	if (buildin)
 	{
 		buildin(params);

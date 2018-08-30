@@ -5,12 +5,12 @@
 #include "lists.h"
 #include "holberton.h"
 /**
- * get_buildin - get buildin function
+ * get_builtin - get buildin function
  * @params: parameters
  *
  * Return: pointer to buildin function. NULL if not found
  */
-void (*get_buildin(param_t *params))(param_t *)
+void (*get_builtin(param_t *params))(param_t *)
 {
 	op_t ops[] = {
 		{"exit", _myExit},
