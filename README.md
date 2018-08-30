@@ -166,6 +166,6 @@ total 420
 | alias | prints and sets aliases for commands | ```($) alias [name[='value'] ...]``` |
 | env | prints all the environment variables | ```($) env``` |
 | setenv | sets an environment variable | ```($) setenv VARIABLE VALUE``` |
-| unsetenv | removes specified environment variable | ```($) unsetenv VARABLE``` |
+| unsetenv | removes specified environment variable | ```($) unsetenv VARIABLE``` |
 | exit | exits the shell with a specified exit code | ```($) exit [int status]``` |
 
