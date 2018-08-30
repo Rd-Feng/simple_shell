@@ -65,8 +65,6 @@ void _printenv(param_t *);
 
 void sigint_handler(int);
 
-int _atoi(char *s);
-
 char *_getenv(char *name, param_t *params);
 
 void _setenv(param_t *params);
