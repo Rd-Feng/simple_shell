@@ -4,7 +4,7 @@
 #include <signal.h>
 #include "myShell.h"
 #include "holberton.h" /* for _printf */
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 4096
 param_t *init_param(char **argv, char **env);
 /**
  * main - entry point for simple shell
