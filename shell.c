@@ -20,6 +20,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	int cond = -2, status;
 	unsigned int i;
 	char *state = NULL;
+	size_t size = BUFFER_SIZE;
 
 	params = init_param(argv, env);
 	if (!params)
@@ -39,7 +40,8 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		params->tokCount = 0;
 		if (isatty(STDIN_FILENO))
 			_printf("($) ");
-		cond = _getline(params);
+		/*cond = _getline(params);*/
+		cond = getline(&params->buffer, &size, stdin);
 		params->lineCount++;
 		if (cond == -1 && _strlen(params->buffer) == 0)
 		{
