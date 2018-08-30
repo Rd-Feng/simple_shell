@@ -33,7 +33,7 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 			free_params(params);
 			if (isatty(STDIN_FILENO))
 				_printf("($) \n");
-                        return (status);
+			return (status);
 		}
 		for (i = 0; i < BUFFER_SIZE; i++)
 			(params->buffer)[i] = 0;
