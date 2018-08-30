@@ -13,7 +13,7 @@ void free_params(param_t *params)
 		free(params->buffer);
 	if (params->nextCommand)
 		free(params->nextCommand);
-	ree_list(params->env_head);
+	free_list(params->env_head);
 	free_list(params->alias_head);
 
 	for (i = 0; params->args[i]; i++)
