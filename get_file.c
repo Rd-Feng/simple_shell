@@ -30,7 +30,10 @@ char *get_file(param_t *params)
 	}
 	path = _getenv("PATH", params);
 	if (!path)
+	{
+		write_error(params, "not found\n");
 		return (NULL);
+	}
 	exePath = _strtok(path, ":", &state);
 	while (exePath)
 	{

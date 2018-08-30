@@ -15,6 +15,11 @@ void _cd(param_t *params)
 	if (params->tokCount == 1)
 	{
 		target = _getenv("HOME", params);
+		if (!target)
+		{
+			params->status = 0;
+			return;
+		}
 	}
 	else if (params->args[1][0] == '-')
 	{
