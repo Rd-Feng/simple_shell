@@ -25,7 +25,7 @@ void (*get_builtin(param_t *params))(param_t *)
 
 	while (op->name)
 	{
-		if (!_strcmp_n(params->args[0], op->name, _strlen(op->name)))
+		if (!_strcmp(params->args[0], op->name))
 			return (op->func);
 		op++;
 	}
