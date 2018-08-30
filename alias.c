@@ -39,32 +39,43 @@ void set_alias(char *name, param_t *params)
 
 	while (name[i] && name[i] != '=')
 		i++;
-	if (name[i + 1] == '\'' && _strchr(&name[i + 2], '\''))
+	if (name[i + 1] == '\'')
 	{
-		tmp = _strchr(&name[i + 2], '\'');
-		*tmp = '\0';
-		val = _strdup(&name[i + 2]);
+		if (_strchr(&name[i + 2], '\''))
+		{
+			tmp = _strchr(&name[i + 2], '\'');
+			*tmp = '\0';
+			val = _strdup(&name[i + 2]);
+			if (!val)
+			{
+				write(STDERR_FILENO, "set alias malloc error\n", 18);
+				exit(-1);
+			}
+			if (tmp[1] != '\0')
+			{
+				while (tmp[j] &&
+					(tmp[j] == ' ' || tmp[j] == '\t' || tmp[j] == '\n'))
+					j++;
+				if (tmp[j] != '\0')
+					set_alias(&tmp[j], params);
+			}
+		}
+		else
+		{
+			_printf("Usage: alias name='value' [...]\n");
+			return;
+		}
+	}
+	else
+	{
+		val = _strdup(&name[i + 1]);
 		if (!val)
 		{
 			write(STDERR_FILENO, "set alias malloc error\n", 18);
 			exit(-1);
 		}
-		if (tmp[1] != '\0')
-		{
-			while (tmp[j] &&
-				(tmp[j] == ' ' || tmp[j] == '\t' || tmp[j] == '\n'))
-				j++;
-			if (tmp[j] != '\0')
-				set_alias(&tmp[j], params);
-		}
-	}
-	else
-	{
-		_printf("Usage: alias name='value' [...]\n");
-		return;
 	}
 	name[i] = '\0'; /* set = to terminater */
-
 	while (h)
 	{
 		if (!_strcmp(name, h->str))

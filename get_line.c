@@ -7,7 +7,9 @@
 
 /**
  * rlLine - realloc the line buffer
- * @params: parameters
+ * @line: to be buffered
+ * @oldSize: something borrowed
+ * @newSize: something blue
  *
  * Return: new allocated buffer
  */
