@@ -36,33 +36,32 @@ Alex Fariioletti https://github.com/thrownblown
 | README.md | You're reading it |
 | man_1_simple_shell | manual page |
 | scr | ... |
-| shell.h | shell header |
+| shell.h | shell function and utility header |
 | lists.h | linked list utilities header |
 | holberton.h | printf and string utilities |
 | alias.c | handles alias builtin for setting and displaying aliases |
 | cd.c | handles cd builtin for changing directories |
-| exit.c | ... |
-| free_params.c | ... |
-| get_arg.c | ... |
-| get_builtin.c | ... |
-| get_env.c | ... |
-| get_file.c | ... |
-| get_line.c | ... |
-| get_sp2.c | ... |
-| get_sp.c | ... |
-| linkedlist.c | ... |
-| printenv.c | ... |
-| printf.c | ... |
-| process_string.c | ... |
-| realloc.c | ... |
-| run_command.c | ... |
-| setenv.c | ... |
-| shell.c | ... |
-| shell.h | ... |
-| signal_handler.c | ... |
-| str2.c | ... |
-| str.c | ... |
-| strtok.c | ... |
+| exit.c | handles exit builtin to close shell program |
+| free_params.c | frees all memory for our state struct |
+| get_arg.c | gets the variadic arguments for _printf |
+| get_builtin.c | takes a command and retrieves the appropo builtin function |
+| get_env.c | gets a specified environment variable |
+| get_file.c | gets a specified file to execute |
+| get_line.c | gets the command line from stdin |
+| get_sp.c | utility functions for _printf |
+| get_sp2.c | utility functions for _printf |
+| linkedlist.c | utility functions for a singly linked list data structure |
+| printenv.c | prints all the environment variables |
+| printf.c | prints formatted strings with variables for many types |
+| process_string.c | parses the command line string for tokens, arguments, builtins and programs |
+| realloc.c | memory reallocation utility |
+| run_command.c | checks if command is a builtin and if not tries to execute a command in the PATH |
+| setenv.c | utility functions for setting and unsetting environment variables |
+| shell.c | our main shell function |
+| signal_handler.c | handles ctrl-C and ot |
+| str.c | string utilities |
+| str2.c | string utilities, cont'd |
+| strtok.c | breaks a string into separate tokens using a variable set of delimiters |
 
 ## Function Descriptions
 
