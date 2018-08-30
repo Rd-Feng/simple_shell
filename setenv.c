@@ -17,7 +17,7 @@ void _setenv(param_t *params)
 
 	if (params->tokCount != 3)
 	{
-		params->status = 2;
+		params->status = 0;
 		return;
 	}
 	while (h)
