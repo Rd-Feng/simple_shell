@@ -85,7 +85,6 @@ Begin shell by calling `./hsh`
 
 Interactive Mode
 ```
-"ls -l" | ./hsh
 ($) ls -l
 total 420
 -rw-rw-r-- 1 thrownblown thrownblown   151 Aug 29 23:25 AUTHORS
@@ -159,3 +158,14 @@ total 420
 -rw-rw-r-- 1 thrownblown thrownblown  1295 Aug 30 07:22 strtok.c
 ($)
 ```
+## Builtin Functions
+
+| Builtin | Description | Usage |
+| ------- | ----------- | ----- |
+| cd | changes the present working directory | ```($) cd [path to dir]``` |
+| alias | prints and sets aliases for commands | ```($) alias [name[='value'] ...]``` |
+| env | prints all the environment variables | ```($) env``` |
+| setenv | sets an environment variable | ```($) setenv VARIABLE VALUE``` |
+| unsetenv | removes specified environment variable | ```($) unsetenv VARABLE``` |
+| exit | exits the shell with a specified exit code | ```($) exit [int status]``` |
+
