@@ -1,5 +1,5 @@
 #include "lists.h"
-#include "myShell.h"
+#include "shell.h"
 #include <stdlib.h>
 /**
  * free_params - frees our state object from memory

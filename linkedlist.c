@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lists.h"
-#include "myShell.h"
+#include "shell.h"
 #include "holberton.h"
 
 /**

@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include "myShell.h"
+#include "shell.h"
 #include "lists.h"
 #include "holberton.h"
 /**
@@ -15,7 +15,7 @@ void run_command(param_t *params)
 	pid_t pid;
 	void (*buildin)(param_t *);
 
-	buildin = get_buildin(params);
+	buildin = get_builtin(params);
 	if (buildin)
 	{
 		buildin(params);

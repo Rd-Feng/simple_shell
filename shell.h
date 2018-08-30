@@ -65,8 +65,6 @@ void _printenv(param_t *);
 
 void sigint_handler(int);
 
-int _atoi(char *s);
-
 char *_getenv(char *name, param_t *params);
 
 void _setenv(param_t *params);
@@ -75,7 +73,7 @@ void _unsetenv(param_t *params);
 
 char *get_file(param_t *params);
 
-void (*get_buildin(param_t *params))(param_t *);
+void (*get_builtin(param_t *params))(param_t *);
 
 void _myExit(param_t *params);
 
