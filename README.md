@@ -167,5 +167,5 @@ total 420
 | env | prints all the environment variables | ```($) env``` |
 | setenv | sets an environment variable | ```($) setenv VARIABLE VALUE``` |
 | unsetenv | removes specified environment variable | ```($) unsetenv VARIABLE``` |
-| exit | exits the shell with a specified exit code | ```($) exit [int status]``` |
+| exit | exits the shell with a specified exit code | ```($) exit [n]``` |
 
