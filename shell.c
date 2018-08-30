@@ -17,7 +17,6 @@ param_t *init_param(char **argv, char **env);
 int main(int __attribute__((unused)) argc, char **argv, char **env)
 {
 	param_t *params = NULL;
-	size_t size = BUFFER_SIZE;
 	int cond = -2, status;
 	unsigned int i;
 	char *state = NULL;
@@ -28,29 +27,21 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 	signal(SIGINT, sigint_handler);
 	while (1)
 	{
-		if (cond != -2 &&
-		    params->buffer[_strlen(params->buffer) - 1] != '\n')
+		if (cond == -1)
 		{
+			status = params->status;
+			free_params(params);
 			if (isatty(STDIN_FILENO))
 				_printf("($) \n");
-			free_params(params);
-			exit(params->status);
+                        return (status);
 		}
 		for (i = 0; i < BUFFER_SIZE; i++)
 			(params->buffer)[i] = 0;
 		params->tokCount = 0;
 		if (isatty(STDIN_FILENO))
 			_printf("($) ");
-		cond = getline(&params->buffer, &size, stdin);
+		cond = _getline(params);
 		params->lineCount++;
-		if (cond == -1)
-		{
-			status = params->status;
-			free_params(params);
-			if (isatty(STDIN_FILENO))
-				_printf("\n");
-			return (status);
-		}
 		state = NULL;
 		params->nextCommand = _strtok(params->buffer, ";", &state);
 		while (params->nextCommand)
