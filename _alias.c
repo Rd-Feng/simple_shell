@@ -34,10 +34,10 @@ void _alias(param_t *params)
 void set_alias(char *name, param_t *params)
 {
 	char *val, *tmp = NULL;
-	unsigned int i = 0;
+	unsigned int i = 0, j = 1;
 	list_t *h = params->alias_head;
 
-	while (name[i] != '=')
+	while (name[i] && name[i] != '=')
 		i++;
 	if (name[i + 1] == '\'' && _strchr(&name[i + 2], '\''))
 	{
@@ -48,6 +48,14 @@ void set_alias(char *name, param_t *params)
 		{
 			write(STDERR_FILENO, "set alias malloc error\n", 18);
 			exit(-1);
+		}
+		if (tmp[1] != '\0')
+		{
+			while (tmp[j] &&
+				(tmp[j] == ' ' || tmp[j] == '\t' || tmp[j] == '\n'))
+				j++;
+			if (tmp[j] != '\0')
+				set_alias(&tmp[j], params);
 		}
 	}
 	else

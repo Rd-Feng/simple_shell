@@ -33,12 +33,14 @@ void _cd(param_t *params)
 		}
 	}
 	else
+	{
 		target = _strdup(params->args[1]);
 		if (!target)
 		{
 			write(STDERR_FILENO, "cd target malloc error\n", 18);
 			exit(-1);
 		}
+	}
 	i = chdir(target);
 	if (i)
 	{

@@ -26,8 +26,8 @@ char *get_file(param_t *params)
 	{
 		params->status = 126;
 		_printf("%s: %d: %s: Permission denied\n",
-                        params->argv[0], params->lineCount,
-                        params->args[0]);
+			params->argv[0], params->lineCount,
+			params->args[0]);
 		return (NULL);
 	}
 	path = _getenv("PATH", params);
