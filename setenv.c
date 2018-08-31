@@ -17,9 +17,7 @@ void _setenv(param_t *params)
 
 	if (params->tokCount != 3)
 	{
-		params->status = 2;
-		write(STDERR_FILENO,
-		      "Usage: setenv VARIABLE VALUE\n", 29);
+		params->status = 0;
 		return;
 	}
 	while (h)
@@ -56,9 +54,7 @@ void _unsetenv(param_t *params)
 
 	if (params->tokCount != 2)
 	{
-		params->status = 2;
-		write(STDERR_FILENO,
-		      "Usage: unsetenv VARIABLE\n", 25);
+		params->status = 0;
 		return;
 	}
 	while (h)
@@ -78,8 +74,5 @@ void _unsetenv(param_t *params)
 		prev = h;
 		h = h->next;
 	}
-	write(STDERR_FILENO, "Environment variable not found: ", 32);
-	write(STDERR_FILENO, params->args[1], _strlen(params->args[1]));
-	write(STDERR_FILENO, "\n", 1);
 	params->status = 0;
 }

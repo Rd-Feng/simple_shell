@@ -37,9 +37,10 @@ void _myExit(param_t *params)
 		status = _atoi((params->args)[1]);
 		if (status == -1)
 		{
-			_printf("%s: %d: exit: Illegal number: %s\n",
-				params->argv[0], params->lineCount,
-				params->args[1]);
+			write_error(params, "Illegal number: ");
+			write(STDERR_FILENO, params->args[1],
+			      _strlen(params->args[1]));
+			write(STDERR_FILENO, "\n", 1);
 			params->status = 2;
 			return;
 		}
@@ -49,7 +50,9 @@ void _myExit(param_t *params)
 	else
 	{
 		params->status = 2;
-		_printf("%s: %d: exit: Illegal number: %s\n",
-			params->argv[0], params->lineCount, params->args[1]);
+		write_error(params, "Illegal number: ");
+		write(STDERR_FILENO, params->args[1],
+		      _strlen(params->args[1]));
+		write(STDERR_FILENO, "\n", 1);
 	}
 }

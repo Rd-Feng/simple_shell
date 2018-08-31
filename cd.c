@@ -15,12 +15,25 @@ void _cd(param_t *params)
 	if (params->tokCount == 1)
 	{
 		target = _getenv("HOME", params);
+		if (!target)
+		{
+			params->status = 0;
+			return;
+		}
 	}
 	else if (params->args[1][0] == '-')
 	{
 		if (!_strcmp(params->args[1], "-"))
 		{
 			target = _getenv("OLDPWD", params);
+			if (!target)
+			{
+				params->status = 0;
+				target = _getenv("PWD", params);
+				_printf("%s\n", target);
+				free(target);
+				return;
+			}
 			_printf("%s\n", target);
 		}
 		else
@@ -44,8 +57,10 @@ void _cd(param_t *params)
 	i = chdir(target);
 	if (i)
 	{
-		_printf("%s: %d: cd: can't cd to %s\n",
-			params->argv[0], params->lineCount, target);
+		write_error(params, "can't cd to ");
+		write(STDERR_FILENO, target, _strlen(target));
+		write(STDERR_FILENO, "\n", 1);
+		params->status = 0;
 		free(target);
 		return;
 	}

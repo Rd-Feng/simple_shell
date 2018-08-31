@@ -95,4 +95,5 @@ void print_list_alias(list_t *);
 
 void free_params(param_t *params);
 
+void write_error(param_t *params, char *msg);
 #endif

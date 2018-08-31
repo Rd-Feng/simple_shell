@@ -25,14 +25,15 @@ char *get_file(param_t *params)
 	if (errno == EACCES)
 	{
 		params->status = 126;
-		_printf("%s: %d: %s: Permission denied\n",
-			params->argv[0], params->lineCount,
-			params->args[0]);
+		write_error(params, "Permission denied\n");
 		return (NULL);
 	}
 	path = _getenv("PATH", params);
 	if (!path)
+	{
+		write_error(params, "not found\n");
 		return (NULL);
+	}
 	exePath = _strtok(path, ":", &state);
 	while (exePath)
 	{
@@ -52,9 +53,7 @@ char *get_file(param_t *params)
 		exePath = _strtok(path, ":", &state);
 	}
 	params->status = 127;
-	_printf("%s: %d: %s: not found\n",
-		params->argv[0], params->lineCount,
-		params->args[0]);
+	write_error(params, "not found\n");
 	free(path);
 	free(exePath);
 	free(exeArg);
