@@ -83,6 +83,8 @@ void _alias(param_t *params);
 
 void set_alias(char *name, param_t *params);
 
+void make_alias(char *name, char *val, param_t *params);
+
 void print_alias(char *name, param_t *params);
 
 void print_all_aliases(param_t *params);

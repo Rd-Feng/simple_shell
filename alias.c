@@ -27,7 +27,7 @@ void _alias(param_t *params)
 }
 
 /**
- * set_alias - function searches the alias list and sets to the corresponding
+ * set_alias - splits the key val string
  * @name: key/value string.
  * @params: shell state
 */
@@ -35,7 +35,6 @@ void set_alias(char *name, param_t *params)
 {
 	char *val, *tmp = NULL;
 	unsigned int i = 0, j = 1;
-	list_t *h = params->alias_head;
 
 	while (name[i] && name[i] != '=')
 		i++;
@@ -46,11 +45,6 @@ void set_alias(char *name, param_t *params)
 			tmp = _strchr(&name[i + 2], '\'');
 			*tmp = '\0';
 			val = _strdup(&name[i + 2]);
-			if (!val)
-			{
-				write(STDERR_FILENO, "set alias malloc error\n", 18);
-				exit(-1);
-			}
 			if (tmp[1] != '\0')
 			{
 				while (tmp[j] &&
@@ -67,15 +61,22 @@ void set_alias(char *name, param_t *params)
 		}
 	}
 	else
-	{
 		val = _strdup(&name[i + 1]);
-		if (!val)
-		{
-			write(STDERR_FILENO, "set alias malloc error\n", 18);
-			exit(-1);
-		}
-	}
 	name[i] = '\0'; /* set = to terminater */
+	make_alias(name, val, params);
+}
+
+/**
+ * make_alias - function searches the alias list and sets to the corresponding
+ * @name: key string.
+ * @val: value string.
+ * @params: shell state
+*/
+
+void make_alias(char *name, char *val, param_t *params)
+{
+	list_t *h = params->alias_head;
+
 	while (h)
 	{
 		if (!_strcmp(name, h->str))
@@ -93,52 +94,4 @@ void set_alias(char *name, param_t *params)
 	params->alias_head = add_node(&(params->alias_head), name, val);
 	free(val);
 	params->status = 0;
-}
-
-/**
- * print_alias - searches the alias list and prints to the corresponding value
- * @name: variable name
- * @params: shell state
- *
- * Return: only print
- */
-void print_alias(char *name, param_t *params)
-{
-	unsigned int len = 0;
-	list_t *ptr = params->alias_head;
-
-	len = _strlen(name);
-	while (ptr)
-	{
-		if (_strcmp_n(name, ptr->str, len - 1) == 0)
-			_printf("%s=\'%s\'\n", ptr->str, ptr->val);
-		ptr = ptr->next;
-	}
-	params->status = 0;
-}
-
-/**
- * print_all_aliases - print all aliases
- * @params: shell state
- * Return: void print
- */
-void print_all_aliases(param_t *params)
-{
-	print_list_alias(params->alias_head);
-	params->status = 0;
-}
-
-/**
- * print_list_alias - print an alias formatted
- * @head: head node of list
- * Return: void print
- */
-void print_list_alias(list_t *head)
-{
-	if (head)
-	{
-		print_list_alias(head->next);
-		if (head->str != NULL)
-			_printf("%s=\'%s\'\n", head->str, head->val);
-	}
 }
